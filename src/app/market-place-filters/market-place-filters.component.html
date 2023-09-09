@@ -1,20 +1,24 @@
-<div class="container">
+<div class="container bg-info p-2 rounded">
     <nav>
-        <h2>Filtros</h2>
+        <h3>Filtros</h3>
         <form>
-            <h3>Categoría</h3>
-            <select class="form-select">
-                <option *ngFor="let category of listOfCategories" [value]="category.code">
-                    {{category.code}}
-                </option>
-            </select>
+            <div class="bg-info-subtle p-2 mb-2 rounded">
+                <h5>Categoría</h5>
+                <select class="form-select">
+                    <option *ngFor="let category of listOfCategories" [value]="category.code">
+                        {{category.name}}
+                    </option>
+                </select>
+            </div>
 
-            <h3>Producto</h3>
-            <select class="form-select">
-                <option *ngFor="let product of listOfProducts" [value]="product.code">
-                    {{product.code}}
-                </option>
-            </select>
+            <div class="bg-info-subtle p-2 rounded">
+                <h5>Producto</h5>
+                <select class="form-select">
+                    <option *ngFor="let product of listOfProducts" [value]="product.code">
+                        {{product.name}}
+                    </option>
+                </select>
+            </div>
         </form>
     </nav>
 </div>
