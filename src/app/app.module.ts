@@ -8,6 +8,9 @@ import { MarketPlaceSearchComponent } from './market-place-search/market-place-s
 import { MarketPlaceArticlesComponent } from './market-place-articles/market-place-articles.component';
 import { MarketPlaceArticleCardComponent } from './market-place-article-card/market-place-article-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { StockAdministratorComponent } from './stock-administrator/stock-administrator.component';
+import { StockAdminCategoriesComponent } from './stock-admin-categories/stock-admin-categories.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,10 +19,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MarketPlaceFiltersComponent,
     MarketPlaceSearchComponent,
     MarketPlaceArticlesComponent,
-    MarketPlaceArticleCardComponent
+    MarketPlaceArticleCardComponent,
+    StockAdministratorComponent,
+    StockAdminCategoriesComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     NgxPaginationModule
   ],
   providers: [],
