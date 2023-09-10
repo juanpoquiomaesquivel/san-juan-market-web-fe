@@ -25,22 +25,43 @@ export class StockAdminCategoriesComponent {
     );
   }
 
-  listOfHeaders: string[] = ['Código', 'Nombre', 'Descripción', '', ''];
+  protected getCategoriesByName(name: string) {
+    this.dataService.loadCategoriesByName(name).subscribe(
+      response => {
+        console.log(response);
+        this.listOfCategories = response;
+      }
+    );
+  }
 
-  editButtonLabel: string = 'Editar';
-  deleteButtonLabel: string = 'Eliminar';
-
-  listOfCategories: Category[] = [
-    new Category('CAT00000', 'cat0', 'desc0'),
-    new Category('CAT00000', 'cat0', 'desc0'),
-    new Category('CAT00004', 'cat0', 'desc0'),
+  protected listOfHeaders: string[] = ['#', 'Código', 'Nombre', 'Descripción', '', ''];
+  protected listOfWidths = [
+    { width: '4%' },
+    { width: '10%' },
+    { width: '30%' },
+    { width: '42%' },
+    { width: '7%' },
+    { width: '7%' },
   ];
 
+
+  protected editButtonLabel: string = 'Editar';
+  protected deleteButtonLabel: string = 'Eliminar';
+
+  listOfCategories: Category[] = [];
+
   p: number = 1; // Current page number
-  itemsPerPage: number = 10; // Items per page
+  itemsPerPage: number = 5; // Items per page
 
   // Function to change the page
   onPageChange(newPage: number): void {
     this.p = newPage;
+  }
+
+  protected previousLabel: string = 'Anterior';
+  protected nextLabel: string = 'Siguiente';
+
+  onSearchButtonClicked(data: string) {
+    this.getCategoriesByName(data);
   }
 }

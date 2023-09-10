@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Article } from './article.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { Category } from './category.model';
+import { Product } from './product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +29,17 @@ export class DataService {
     withCredentials?: boolean;
   };
 
-  articles: Article[];//'http://localhost:8081/article/api/all';
-
   private baseUrl = 'http://localhost:8081';
 
-  loadCategories(): Observable<Article[]> {
-    return this.httpClient.get<Article[]>(`${this.baseUrl}/category/api/all`);
+  loadCategories(): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(`${this.baseUrl}/category/api/all`);
+  }
+
+  loadCategoriesByName(name: string): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(`${this.baseUrl}/category/api/byname/${name}`);
+  }
+
+  loadProducts(): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.baseUrl}/product/api/all`);
   }
 }

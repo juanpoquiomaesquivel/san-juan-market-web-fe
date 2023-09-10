@@ -11,6 +11,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { StockAdministratorComponent } from './stock-administrator/stock-administrator.component';
 import { StockAdminCategoriesComponent } from './stock-admin-categories/stock-admin-categories.component';
 import { HttpClientModule } from '@angular/common/http';
+import { StockAdminCategorySearchComponent } from './stock-admin-category-search/stock-admin-category-search.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { HttpClientModule } from '@angular/common/http';
     MarketPlaceArticlesComponent,
     MarketPlaceArticleCardComponent,
     StockAdministratorComponent,
-    StockAdminCategoriesComponent
+    StockAdminCategoriesComponent,
+    StockAdminCategorySearchComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
