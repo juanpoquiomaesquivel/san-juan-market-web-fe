@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <ul
+                class="navbar-nav nav-pills me-auto my-2 my-lg-0 navbar-nav-scroll"
+            >
+                <li
+                    class="nav-item"
+                    *ngFor="let route of routes"
+                    [routerLinkActive]="['active']"
+                    #rla="routerLinkActive"
+                >
+                    <a
+                        class="nav-link"
+                        [routerLink]="route.link"
+                        [ngStyle]="rla.isActive ? { color: 'red' } : {}"
+                        >{{ route.name }}</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div style="margin-top: 20px">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,45 @@
+<div class="container bg-info p-2 rounded">
+    <nav>
+        <h3>Filtros</h3>
+        <form>
+            <div class="bg-info-subtle p-2 mb-2 rounded">
+                <h5>Categoría</h5>
+                <select
+                    class="form-select"
+                    [(ngModel)]="selectedCategoryFilterId"
+                    (change)="onCategoryFilterSelectChange()"
+                    name="selectCategoryFilter"
+                >
+                    <option value="0">Todos</option>
+                    <option
+                        *ngFor="let categoryFilter of categoryFilterList"
+                        [value]="categoryFilter.id"
+                        [title]="categoryFilter.description"
+                    >
+                        {{ categoryFilter.name }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="bg-info-subtle p-2 rounded">
+                <h5>Producto</h5>
+                <select
+                    class="form-select"
+                    [(ngModel)]="selectedProductFilterId"
+                    name="selectProductFilter"
+                    (change)="onProductFilterSelectChange()"
+                    [disabled]="selectedCategoryFilterId == 0"
+                >
+                    <option value="0">Todos</option>
+                    <option
+                        *ngFor="let productFilter of filteredProductFilterList"
+                        [value]="productFilter.id"
+                        [title]="productFilter.description"
+                    >
+                        {{ productFilter.name }}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </nav>
+</div>

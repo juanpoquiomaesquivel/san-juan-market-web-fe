@@ -1,0 +1,21 @@
+<div class="row g-1">
+    <div class="col-10">
+        <input
+            id="ssss"
+            class="form-control"
+            type="search"
+            placeholder="Ingresa tu categoría."
+            (input)="changeSearchValue($event)"
+        />
+    </div>
+
+    <div class="col-2">
+        <button
+            class="btn btn-primary w-100"
+            type="submit"
+            (click)="onSearchButtonClick()"
+        >
+            OK
+        </button>
+    </div>
+</div>

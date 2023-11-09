@@ -1,0 +1,14 @@
+<div>
+    <h1>{{ title }}</h1>
+    <div class="row justify-content-center">
+        <app-mp-article-card
+            *ngFor="let articleCard of filteredArticleCardList | paginate: {itemsPerPage: pageSize, currentPage: pageNumber}; let i = index"
+            class="col-sm-12 col-md-6 col-lg-4 col-xl-4 my-3" [article]="articleCard"
+            [id]="i"></app-mp-article-card>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-column align-items-center mt-4">
+            <pagination-controls (pageChange)="pageNumber = $event" previousLabel="Anterior"
+                nextLabel="Siguiente"></pagination-controls>
+        </div>
+    </div>
+</div>

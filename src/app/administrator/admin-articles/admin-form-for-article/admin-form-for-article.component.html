@@ -1,0 +1,116 @@
+<button
+    mat-icon-button
+    [mat-dialog-close]="false"
+    style="float: right"
+    tabindex="-1"
+>
+    <mat-icon>close</mat-icon>
+</button>
+
+<div class="text-center h5 px-2" style="margin-top: 50px; margin-bottom: 2px">
+    <span style="font-weight: bold">AGREGAR NUEVO ARTÍCULO</span>
+</div>
+
+<div mat-dialog-content style="padding: 15px; color: black">
+    <div class="row gap-2 mb-3">
+        <div class="col-12">
+            <div style="font-weight: bold">Seleccione un produto:</div>
+            <div class="hstack gap-2">
+                <select
+                    class="form-select form-select-sm"
+                    (change)="onProductOptionSelectChange($event)"
+                    [(ngModel)]="selectedProductOptionId"
+                >
+                    <option
+                        *ngFor="let productOption of productOptionList"
+                        value="{{ productOption.id }}"
+                    >
+                        <div
+                            class="text-break"
+                            style="
+                                max-width: 100px;
+                                overflow: hidden;
+                                white-space: nowrap;
+                                text-overflow: ellipsis;
+                            "
+                        >
+                            {{ productOption.name | uppercase }}
+                        </div>
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div>Asociele un nombre</div>
+            <input
+                class="form-control form-control-sm"
+                type="text"
+                [(ngModel)]="articleName"
+            />
+        </div>
+
+        <div class="col-12">
+            <div>Asociele una descripcion</div>
+            <input
+                class="form-control form-control-sm"
+                type="text"
+                [(ngModel)]="articleDescription"
+            />
+        </div>
+
+        <div class="col-12">
+            <div>Asociele un precio</div>
+            <input
+                class="form-control form-control-sm"
+                type="number"
+                [(ngModel)]="articlePrice"
+            />
+        </div>
+
+        <div class="col-12">
+            <div>Asociele un stock inicial:</div>
+            <input
+                class="form-control form-control-sm"
+                type="number"
+                [(ngModel)]="articleStock"
+            />
+        </div>
+
+        <div class="col-12">
+            <div>Asociele una imagen:</div>
+            <input
+                class="form-control form-control-sm"
+                type="text"
+                [(ngModel)]="articleImg"
+            />
+        </div>
+
+        <div class="col-12">
+            <div>Asociele un codigo de barras:</div>
+            <input
+                class="form-control form-control-sm"
+                type="text"
+                [(ngModel)]="articleBarCode"
+            />
+        </div>
+    </div>
+
+    <div class="modal-footer justify-content-center gap-2">
+        <button
+            [mat-dialog-close]="result()"
+            type="button"
+            class="btn btn-sm btn-outline-dark"
+            [disabled]="articleName.trim().length === 0"
+        >
+            Guardar
+        </button>
+        <button
+            [mat-dialog-close]="false"
+            type="button"
+            class="btn btn-sm btn-outline-dark"
+        >
+            Cancelar
+        </button>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<button
+    mat-icon-button
+    [mat-dialog-close]="false"
+    style="float: right"
+    tabindex="-1"
+>
+    <mat-icon>close</mat-icon>
+</button>
+
+<div class="text-center h5 px-2" style="margin-top: 50px; margin-bottom: 2px">
+    <span style="font-weight: bold">AGREGAR NUEVA CATEGORÍA</span>
+</div>
+
+<div mat-dialog-content style="padding: 15px; color: black">
+    <div class="row gap-2 mb-3">
+        <div class="col-12">
+            <div style="font-weight: bold">Adicione etiquetas</div>
+            <div class="hstack gap-2">
+                <select
+                    class="form-select form-select-sm"
+                    [(ngModel)]="selectedClassOption"
+                >
+                    <optgroup
+                        *ngFor="
+                            let classOptionSubList of filteredClassOptionList
+                        "
+                        label="{{ classOptionSubList.family | uppercase }}"
+                    >
+                        <option
+                            *ngFor="
+                                let classOption of classOptionSubList.classOptionList
+                            "
+                            value="{{ classOption.id }}"
+                        >
+                            <div
+                                class="text-break"
+                                style="
+                                    max-width: 100px;
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    text-overflow: ellipsis;
+                                "
+                            >
+                                {{ classOption.name | uppercase }}
+                            </div>
+                        </option>
+                    </optgroup>
+                </select>
+                <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    (click)="onAddClassOptionButtonClick()"
+                    [disabled]="selectedClassOption === undefined"
+                >
+                    Agregar
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div
+                class="badge text-bg-primary py-0"
+                *ngFor="let selectedClass of selectedClassOptionList"
+                title="{{ selectedClass.name | uppercase }}"
+                style="margin-right: 4px"
+            >
+                <div
+                    class="text-break"
+                    style="
+                        max-width: 100px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    "
+                >
+                    <button
+                        type="button"
+                        class="btn btn-sm p-0 m-0"
+                        style="margin-right: 1px"
+                        (click)="
+                            onRemoveClassOptionButtonClick(selectedClass.id)
+                        "
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ selectedClass.name | uppercase }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div>Asociele un nombre</div>
+            <input
+                class="form-control form-control-sm"
+                type="text"
+                [(ngModel)]="categoryName"
+            />
+        </div>
+
+        <div class="col-12">
+            <div>Asociele un descripcion</div>
+            <input
+                class="form-control form-control-sm"
+                type="text"
+                [(ngModel)]="categoryDescription"
+            />
+        </div>
+    </div>
+
+    <div class="modal-footer justify-content-center gap-2">
+        <button
+            [mat-dialog-close]="result()"
+            type="button"
+            class="btn btn-sm btn-outline-dark"
+            [disabled]="categoryName.trim().length === 0"
+        >
+            Guardar
+        </button>
+        <button
+            [mat-dialog-close]="false"
+            type="button"
+            class="btn btn-sm btn-outline-dark"
+        >
+            Cancelar
+        </button>
+    </div>
+</div>
