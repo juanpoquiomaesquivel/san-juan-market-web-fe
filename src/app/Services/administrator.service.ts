@@ -39,6 +39,10 @@ export class AdministratorService {
 
   private baseUrl = 'http://localhost:8081';
 
+  onLoadAllCategories(): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(`${this.baseUrl}/category/api/get/all`);
+  } // ok
+
   onLoadFamilyOptionGroupList(): Observable<FamilyOptionGroup[]> {
     return this.httpClient.get<FamilyOptionGroup[]>(`${this.baseUrl}/family/api/get/familyoptiongroup`);
   }

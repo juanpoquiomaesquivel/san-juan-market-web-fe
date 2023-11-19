@@ -1,37 +1,42 @@
-<form>
-    <div class="card" style="width: auto">
-        <img class="card-img-top" [src]="article.img" />
-        <div class="card-body">
-            <h5 class="card-title">{{ article.name }}</h5>
-            <div class="d-flex justify-content-between">
-                <h4 class="text-success">S/. {{ article.price }}</h4>
-                <span class="text-danger"
-                    ><s>S/. {{ article.price }}</s></span
-                >
-            </div>
-            <div class="d-flex justify-content-between">
-                <p class="text-muted mb-0">
-                    Disponible: <span class="fw-bold">{{ article.stock }}</span>
-                </p>
-            </div>
+<div class="card" style="width: auto">
+    <img
+        class="card-img-top"
+        src="{{ article.img }}"
+        title="{{ article.name }}"
+    />
 
-            <input type="hidden" [value]="id" />
-            <input type="hidden" name="article_name" [value]="article.name" />
-            <input type="hidden" name="article_price" [value]="article.price" />
-            <input type="hidden" name="article_img" [value]="article.img" />
+    <div class="card-body">
+        <div class="card-title">
+            {{ article.name | uppercase }}
+        </div>
 
-            <div class="d-flex flex-column mt-4">
-                <button
-                    type="submit"
-                    class="btn btn-success btn-sm mt-2"
-                    [disabled]="article.stock == 0"
-                >
-                    ¡Añadir al carrito!
-                </button>
-                <button type="submit" class="btn btn-warning btn-sm mt-2">
-                    ¡Ver más info!
-                </button>
-            </div>
+        <div class="d-flex justify-content-between mb-2">
+            <span class="text-success" style="font-size: 18px; font-weight: 600"
+                >S/. {{ article.price }}</span
+            >
+            <span class="text-danger" style="font-size: 14px"
+                ><s>S/. {{ article.price }}</s></span
+            >
+        </div>
+
+        <div class="d-flex justify-content-between mb-2">
+            <span
+                class="text-muted"
+                style="font-size: 14px; font-weight: 400; user-select: none"
+            >
+                Disponible: <strong>{{ article.stock + " u" }}</strong>
+            </span>
+        </div>
+
+        <div class="d-flex flex-column">
+            <button type="button" class="btn" *ngIf="article.stock > 0">
+                <span>
+                    {{ "¡agregar al carrito!" | uppercase }}
+                </span>
+            </button>
+            <button type="button" class="btn mt-2">
+                <span>{{ "¡ver más info!" | uppercase }} </span>
+            </button>
         </div>
     </div>
-</form>
+</div>

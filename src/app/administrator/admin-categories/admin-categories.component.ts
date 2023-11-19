@@ -12,24 +12,25 @@ import { AdministratorService } from 'src/app/Services/administrator.service';
 })
 export class AdminCategoriesComponent {
 
-  constructor(private matDialog: MatDialog, private dataService: DataService, private administratorService: AdministratorService) { }
+  constructor(private matDialog: MatDialog, private administratorService: AdministratorService) { }
+
+  private categoryList: Category[] = [];
+  protected filteredCategoryList: Category[] = [];
+  protected isFetching: boolean;
+  protected isFiltering: boolean;
+  protected isEmpty: boolean;
 
   ngOnInit(): void {
-    this.getCategories();
-  }
+    this.isFetching = true;
 
-  private getCategories() {
-    this.dataService.loadAllCategories().subscribe(
-      response => {
-        this.listOfCategories = response;
-      }
-    );
-  }
-
-  protected getCategoriesByName(name: string) {
-    this.dataService.loadCategoriesContainingName(name).subscribe(
-      response => {
-        this.listOfCategories = response;
+    this.administratorService.onLoadAllCategories().subscribe(
+      (categoryListData) => {
+        this.isFetching = false;
+        this.categoryList = categoryListData;
+        this.isFiltering = true;
+        this.filteredCategoryList = this.categoryList;
+        this.isFiltering = false;
+        this.isEmpty = (this.categoryList.length === 0);
       }
     );
   }
@@ -48,8 +49,6 @@ export class AdminCategoriesComponent {
   protected editButtonLabel: string = 'Editar';
   protected deleteButtonLabel: string = 'Eliminar';
 
-  listOfCategories: Category[] = [];
-
   p: number = 1; // Current page number
   itemsPerPage: number = 5; // Items per page
 
@@ -61,8 +60,8 @@ export class AdminCategoriesComponent {
   protected previousLabel: string = 'Anterior';
   protected nextLabel: string = 'Siguiente';
 
-  onSearchButtonClicked(data: string) {
-    this.getCategoriesByName(data);
+  onSearchButtonClicked(keyword: string) {
+    this.filteredCategoryList = this.categoryList.filter((cat) => cat.name.toLowerCase().includes(keyword.toLowerCase()));
   }
 
   protected onAddButtonClick() {
@@ -85,7 +84,7 @@ export class AdminCategoriesComponent {
 
   protected onEditCategoryButtonClick(categoryId: number) {
 
-    const obj = this.listOfCategories.find((cat) => cat.id === categoryId);
+    const obj = this.categoryList.find((cat) => cat.id === categoryId);
 
     const dg = this.matDialog.open(AdminFormAddCategoryComponent, {
       width: '350px',

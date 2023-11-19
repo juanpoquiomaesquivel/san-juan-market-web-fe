@@ -1,4 +1,11 @@
-<div class="input-group my-3">
-    <input class="form-control" type="search" placeholder="{{searchLabelPlaceholder}}" aria-label="Search" [(ngModel)]="keyword" />
-    <button class="btn btn-primary" type="submit" id="button-addon2" (click)="onSearchFilterButtonClick()">Buscar</button>
+<div class="container px-2 pb-2">
+    <input
+        type="text"
+        placeholder="{{ searchLabelPlaceholder }}"
+        [(ngModel)]="keyword"
+        (keyup)="onKeyboardPressed()"
+    />
+    <button class="btn" (click)="cleanKeyword()">
+        Limpiar
+    </button>
 </div>

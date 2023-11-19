@@ -11,51 +11,74 @@ export class MpArticlesComponent {
 
   title: string = 'Artículos';
 
-  articleCardList: ArticleCard[] = [];
-  filteredArticleCardList: ArticleCard[] = [];
+  protected articleCardList: ArticleCard[] = [];
+  protected filteredArticleCardList: ArticleCard[] = [];
 
-  private selectedCategoryFilterId: number = 0;
-  private selectedProductFilterId: number = 0;
   private keyword: string = '';
+  private selectedProductFilterIdList: number[] = [];
+
+  protected isFetching: boolean = true;
+  protected isFiltering: boolean = false;
+  protected isEmpty: boolean = true;
+
+  protected totalOfResults: number;
 
   constructor(private marketPlaceService: MarketPlaceService) { }
 
   ngOnInit() {
-    this.marketPlaceService.OnLoadArticleCardList().subscribe((data) => {
-      this.articleCardList = data;
-      this.filteredArticleCardList = this.articleCardList;
-    });
+    this.isFetching = true;
 
-    this.marketPlaceService.onCategoryFilterSelectChanged.subscribe((data) => {
-      this.selectedCategoryFilterId = data;
-      this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
-    });
+    this.marketPlaceService.onLoadArticleCardList().subscribe(
+      {
+        next: (articleCardListData) => {
+          this.articleCardList = articleCardListData;
+          this.isFetching = false;
+          this.isFiltering = true;
+          this.filteredArticleCardList =this.articleCardList;
+          this.isFiltering = false;
+          this.isEmpty = (this.articleCardList.length === 0);
+        },
+        error: () => {
+          this.isFetching = false;
+          this.isFiltering = false;
+          this.isEmpty = true;
+        }
+      }
+    );
 
-    this.marketPlaceService.onProductFilterSelectChanged.subscribe((data) => {
-      this.selectedProductFilterId = data;
-      this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
-    });
+    this.marketPlaceService.onSearchFilterButtonClicked.subscribe(
+      (keyword) => {
+        this.isFiltering = true;
+        this.keyword = keyword;
+        this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
+        this.isFiltering = false;
+        this.isEmpty = (this.articleCardList.length === 0);
+      }
+    );
 
-    this.marketPlaceService.onSearchFilterButtonClicked.subscribe((data) => {
-      this.keyword = data;
-      this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
-    });
+    this.marketPlaceService.onFilterCheckboxChanged.subscribe(
+      (selectedProductFilterIdListData) => {
+        this.isFiltering = true;
+        this.selectedProductFilterIdList = selectedProductFilterIdListData;
+        this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
+        this.isFiltering = false;
+        this.isEmpty = (this.articleCardList.length === 0);
+      }
+    );
   }
 
   private filterArticleCardList(keyword: string): ArticleCard[] {
     let aux = this.articleCardList;
 
-    if (this.selectedProductFilterId == 0) {
-      if (this.selectedCategoryFilterId != 0) {
-        aux = aux.filter((articleCard) => articleCard.categoryId == this.selectedCategoryFilterId);
-      }
-    } else {
-      aux = aux.filter((articleCard) => articleCard.productId == this.selectedProductFilterId);
+    aux = aux.filter(
+      (art) => this.selectedProductFilterIdList.includes(art.productId)
+    );
+
+    if (this.keyword !== '') {
+      aux = aux.filter((art) => art.name.toLowerCase().includes(keyword.toLowerCase()));
     }
 
-    if (this.keyword != '') {
-      aux = aux.filter((articleCard) => articleCard.name.toLowerCase().includes(keyword.toLowerCase()));
-    }
+    this.pageNumber = 1;
 
     return aux;
   }

@@ -31,6 +31,7 @@ import { AdminFormForProductComponent } from './administrator/admin-products/adm
 import { AdminArticleSearchComponent } from './administrator/admin-articles/admin-article-search/admin-article-search.component';
 import { AdminFormForArticleComponent } from './administrator/admin-articles/admin-form-for-article/admin-form-for-article.component';
 import { AdminArticlesComponent } from './administrator/admin-articles/admin-articles.component';
+import { FooterComponent } from './footer/footer.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
     AdminFormForProductComponent,
     AdminArticleSearchComponent,
     AdminFormForArticleComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

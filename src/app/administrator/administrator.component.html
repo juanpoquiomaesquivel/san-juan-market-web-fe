@@ -1,20 +1,17 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand-md px-0 py-3 jx-navbar">
     <div class="container-fluid">
-        <div class="collapse navbar-collapse">
-            <ul
-                class="navbar-nav nav-pills me-auto my-2 my-lg-0 navbar-nav-scroll"
-            >
+        <div class="jx-navbar-container" id="navbarScroll">
+            <ul class="nav justify-content-center">
                 <li
-                    class="nav-item"
+                    class="jx-nav-item"
                     *ngFor="let route of routes"
-                    [routerLinkActive]="['active']"
-                    #rla="routerLinkActive"
+                    [routerLinkActive]="['jx-nav-item-active']"
                 >
                     <a
-                        class="nav-link"
+                        [routerLinkActive]="['jx-nav-item-link-active']"
+                        class="jx-nav-item-link"
                         [routerLink]="route.link"
-                        [ngStyle]="rla.isActive ? { color: 'red' } : {}"
-                        >{{ route.name }}</a
+                        >{{ route.name | uppercase }}</a
                     >
                 </li>
             </ul>
@@ -22,6 +19,6 @@
     </div>
 </nav>
 
-<div style="margin-top: 20px">
+<div class="my-3">
     <router-outlet></router-outlet>
 </div>

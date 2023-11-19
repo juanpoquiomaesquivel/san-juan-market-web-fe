@@ -24,13 +24,7 @@ export class AdminCategorySearchComponent {
     this.selectFilter = this.filters[0];
   }
 
-
-
-  changeSearchValue(eventData: Event) {
-    this.searchValue = (<HTMLInputElement>eventData.target).value;
-  }
-
-  searchValue: string = '';
+  protected searchValue: string = '';
 
   @Output()
   searchButtonClick: EventEmitter<string> = new EventEmitter<string>();

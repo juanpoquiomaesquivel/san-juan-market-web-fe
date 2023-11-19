@@ -29,31 +29,26 @@ export class MarketPlaceService {
 
     private baseURL = 'http://localhost:8081';
 
-    OnLoadCategoryFilterList(): Observable<CategoryFilter[]> {
+    onLoadCategoryFilterList(): Observable<CategoryFilter[]> {
         return this.httpClient.get<CategoryFilter[]>(`${this.baseURL}/category/api/filters/get/all`);
     }
 
-    OnLoadProductFilterList(): Observable<ProductFilter[]> {
+    onLoadProductFilterList(): Observable<ProductFilter[]> {
         return this.httpClient.get<ProductFilter[]>(`${this.baseURL}/product/api/filters/get/all`);
     }
 
-    OnLoadArticleCardList(): Observable<ArticleCard[]> {
+    onLoadArticleCardList(): Observable<ArticleCard[]> {
         return this.httpClient.get<ArticleCard[]>(`${this.baseURL}/article/api/card/get/all`);
     }
 
-    onCategoryFilterSelectChanged: EventEmitter<number> = new EventEmitter<number>();
-    onProductFilterSelectChanged: EventEmitter<number> = new EventEmitter<number>();
-    onSearchFilterButtonClicked:  EventEmitter<string> = new EventEmitter<string>();
-
-    categoryFilterSelect(categoryFilterId: number) {
-        this.onCategoryFilterSelectChanged.emit(categoryFilterId);
-    }
-
-    productFilterSelect(productFilterId: number) {
-        this.onProductFilterSelectChanged.emit(productFilterId);
-    }
+    onSearchFilterButtonClicked: EventEmitter<string> = new EventEmitter<string>();
+    onFilterCheckboxChanged: EventEmitter<number[]> = new EventEmitter<any[]>();
 
     searchFilterButton(keyword: string) {
         this.onSearchFilterButtonClicked.emit(keyword);
+    }
+
+    filterCheckboxChange(productFilterIdList: number[]) {
+        this.onFilterCheckboxChanged.emit(productFilterIdList);
     }
 }

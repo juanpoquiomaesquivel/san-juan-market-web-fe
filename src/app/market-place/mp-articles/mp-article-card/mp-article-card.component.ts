@@ -9,5 +9,4 @@ import { ArticleCard } from 'src/app/Models/article-card.model';
 export class MpArticleCardComponent {
 
   @Input() article: ArticleCard;
-  @Input() id: number;
 }

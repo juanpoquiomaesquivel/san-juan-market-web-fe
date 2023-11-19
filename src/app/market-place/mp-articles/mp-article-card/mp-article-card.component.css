@@ -1,0 +1,70 @@
+.card-img-top {
+    width: 100%;
+    height: 14vw;
+    object-fit: contain;
+}
+
+.card {
+    border-color: #bebebe;
+    transition: 0.3s ease-in-out;
+}
+
+.card:hover {
+    border-color: #ce0059 !important;
+}
+
+.card-title {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+}
+
+.card .btn {
+    border-color: #a8144d;
+    background-color: #a8144d;
+    border-width: 2px;
+    border-radius: 25px;
+    transition: 0.3s ease-in-out;
+}
+
+.card .btn span {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s ease-in-out;
+}
+
+.card .btn:active {
+    background-color: #a5ff2f;
+    border-color: #ce0059;
+}
+
+.card .btn:active span {
+    color: #ce0059 !important;
+}
+
+.card:hover .btn {
+    background-color: #ce0059;
+    border-color: #ce0059;
+}
+
+.card:hover .btn span {
+    color: #ffffff !important;
+}
+
+.card:hover .btn:hover {
+    background-color: #ffffff;
+    border-color: #ce0059;
+}
+
+.card:hover .btn:hover span,
+.card:hover .btn:active span {
+    color: #ce0059 !important;
+}
+
+.card:hover .btn:active {
+    background-color: #a5ff2f;
+    border-color: #ce0059;
+}

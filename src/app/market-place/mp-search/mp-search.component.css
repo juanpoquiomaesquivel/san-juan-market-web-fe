@@ -1,0 +1,21 @@
+.container input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #bebebe;
+    border-radius: 25px;
+    padding: 0 12px 0 16px;
+    font-size: 15px;
+    font-weight: 400;
+    transition: 0.3s ease-in-out;
+}
+
+.container input:hover {
+    border-color: #a8144d;
+}
+
+.container input:focus {
+    outline: none;
+    background-color: #ffffff;
+    border: 1px solid #ce0059;
+    box-shadow: 0px 0px 0px 1px #ce0059 inset;
+}

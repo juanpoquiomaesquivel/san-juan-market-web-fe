@@ -13,7 +13,12 @@
         </div>
 
         <div class="col-6 my-3">
-            <button type="button" class="btn btn-danger" style="width: 80px" (click)="onAddButtonClick()">
+            <button
+                type="button"
+                class="btn btn-danger"
+                style="width: 80px"
+                (click)="onAddButtonClick()"
+            >
                 Agregar
             </button>
         </div>
@@ -33,7 +38,7 @@
         <tbody>
             <tr
                 *ngFor="
-                    let category of listOfCategories
+                    let category of filteredCategoryList
                         | paginate
                             : { itemsPerPage: itemsPerPage, currentPage: p };
                     let i = index

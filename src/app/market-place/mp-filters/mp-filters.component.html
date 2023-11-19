@@ -1,45 +1,87 @@
-<div class="container bg-info p-2 rounded">
-    <nav>
-        <h3>Filtros</h3>
-        <form>
-            <div class="bg-info-subtle p-2 mb-2 rounded">
-                <h5>Categoría</h5>
-                <select
-                    class="form-select"
-                    [(ngModel)]="selectedCategoryFilterId"
-                    (change)="onCategoryFilterSelectChange()"
-                    name="selectCategoryFilter"
-                >
-                    <option value="0">Todos</option>
-                    <option
-                        *ngFor="let categoryFilter of categoryFilterList"
-                        [value]="categoryFilter.id"
-                        [title]="categoryFilter.description"
+<div class="container p-lg-2">
+    <div class="py-2 px-0">
+        <div class="jx-title">
+            {{ "categorías" | uppercase }}
+        </div>
+        <div class="row m-0 scrolly">
+            <div
+                class="col-sm-12 col-md-12 col-lg-12 col-xl-6 text-center"
+                *ngFor="let categoryFilter of categoryFilterList"
+            >
+                <div class="jx-toggle d-flex justify-content-center">
+                    <input
+                        type="checkbox"
+                        id="{{ categoryFilter.id }}"
+                        autocomplete="off"
+                        value="{{ categoryFilter.id }}"
+                        (change)="onCategoryFilterCheckboxChange($event)"
+                    />
+                    <label
+                        class="jx-toggle-btn d-flex"
+                        for="{{ categoryFilter.id }}"
                     >
-                        {{ categoryFilter.name }}
-                    </option>
-                </select>
+                        <img
+                            class="align-self-center"
+                            src="assets/market-place/default.png"
+                            alt=""
+                        />
+                    </label>
+                </div>
+                <p class="jx-category-title p-0 mt-1 mb-2 m-0">
+                    {{ categoryFilter.name | uppercase }}
+                </p>
             </div>
-
-            <div class="bg-info-subtle p-2 rounded">
-                <h5>Producto</h5>
-                <select
-                    class="form-select"
-                    [(ngModel)]="selectedProductFilterId"
-                    name="selectProductFilter"
-                    (change)="onProductFilterSelectChange()"
-                    [disabled]="selectedCategoryFilterId == 0"
-                >
-                    <option value="0">Todos</option>
-                    <option
+        </div>
+    </div>
+    <hr
+        class="m-0 mb-2 p-0"
+        style="color: white"
+        *ngIf="this.selectedCategoryFilterIdList.length > 0"
+    />
+    <div class="py-2 px-0" *ngIf="this.selectedCategoryFilterIdList.length > 0">
+        <div class="jx-title">
+            {{ "productos" | uppercase }}
+        </div>
+        <div class="row m-0 p-0 scrolly">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div *ngFor="let cat of categoryFilterList">
+                    <div
+                        *ngIf="selectedCategoryFilterIdList.includes(cat.id)"
+                        class="jx-subtitle"
+                    >
+                        {{ cat.name }}
+                    </div>
+                    <ng-container
                         *ngFor="let productFilter of filteredProductFilterList"
-                        [value]="productFilter.id"
-                        [title]="productFilter.description"
                     >
-                        {{ productFilter.name }}
-                    </option>
-                </select>
+                        <div
+                            class="jx-toggle d-flex justify-content-center mb-1"
+                            *ngIf="productFilter.categoryFilterId === cat.id"
+                        >
+                            <input
+                                type="checkbox"
+                                id="{{ productFilter.id + 'p' }}"
+                                autocomplete="off"
+                                value="{{ productFilter.id }}"
+                                (change)="onProductFilterCheckboxChange($event)"
+                                [checked]="
+                                    selectedProductFilterIdList.includes(
+                                        productFilter.id
+                                    )
+                                "
+                            />
+                            <label
+                                class="jx-snack-btn d-flex"
+                                for="{{ productFilter.id + 'p' }}"
+                            >
+                                <p class="jx-product-title">
+                                    {{ productFilter.name | uppercase }}
+                                </p>
+                            </label>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
-        </form>
-    </nav>
+        </div>
+    </div>
 </div>

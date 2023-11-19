@@ -8,17 +8,22 @@ import { MarketPlaceService } from 'src/app/Services/market-place.service';
 })
 export class MpSearchComponent {
 
-  searchLabelPlaceholder = 'Encuentra lo que necesitas... :)'
+  protected searchLabelPlaceholder = 'Buscar articulos'
 
   protected keyword: string = '';
 
-  constructor(private marketPlaceService: MarketPlaceService) {}
+  constructor(private marketPlaceService: MarketPlaceService) { }
 
   ngOnInit() {
 
   }
 
-  onSearchFilterButtonClick() {
+  protected cleanKeyword() {
+    this.keyword = '';
+    this.marketPlaceService.searchFilterButton(this.keyword);
+  }
+
+  onKeyboardPressed() {
     this.marketPlaceService.searchFilterButton(this.keyword);
   }
 }

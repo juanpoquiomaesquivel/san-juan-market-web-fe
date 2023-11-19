@@ -1,9 +1,11 @@
 <div class="container">
-    <app-mp-search></app-mp-search>
-
     <div class="row">
-        <app-mp-filters class="col-sm-12 col-md-3 col-lg-3 col-xl-3"></app-mp-filters>
-
-        <app-mp-articles class="col-sm-12 col-md-9 col-lg-9 col-xl-9"></app-mp-articles>
+        <app-mp-filters
+            class="col-sm-12 col-md-3 col-lg-3 col-xl-3"
+        ></app-mp-filters>
+        <div class="col-sm-12 col-md-9 col-lg-9 col-xl-9">
+            <app-mp-search class="col-12"></app-mp-search>
+            <app-mp-articles class="col-12"></app-mp-articles>
+        </div>
     </div>
 </div>

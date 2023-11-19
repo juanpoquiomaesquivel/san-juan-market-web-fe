@@ -13,38 +13,80 @@ export class MpFiltersComponent implements OnInit {
   constructor(private marketPlaceService: MarketPlaceService) { }
 
   protected categoryFilterList: CategoryFilter[] = [];
-  protected productFilterList: ProductFilter[] = [];
+  private productFilterList: ProductFilter[] = [];
   protected filteredProductFilterList: ProductFilter[] = [];
 
-  protected selectedCategoryFilterId: number = 0;
-  protected selectedProductFilterId: number = 0;
+  protected selectedCategoryFilterIdList: number[] = [];
+  protected selectedProductFilterIdList: number[] = [];
 
   ngOnInit(): void {
-    this.marketPlaceService.OnLoadCategoryFilterList().subscribe((data) => {
-      this.categoryFilterList = data;
-    });
-    this.marketPlaceService.OnLoadProductFilterList().subscribe((data) => {
-      this.productFilterList = data;
-      this.filteredProductFilterList = this.productFilterList;
-    });
+    this.marketPlaceService.onLoadCategoryFilterList().subscribe(
+      (categoryFilterListData) => {
+        this.categoryFilterList = categoryFilterListData;
+      }
+    );
+    this.marketPlaceService.onLoadProductFilterList().subscribe(
+      (productFilterListData) => {
+        this.productFilterList = productFilterListData;
+        this.filteredProductFilterList = this.productFilterList;
+        this.marketPlaceService.filterCheckboxChange(this.obtain());
+      }
+    );
   }
 
-  onCategoryFilterSelectChange() {
-    this.filteredProductFilterList = this.filterProductFilterList(this.selectedCategoryFilterId);
-    this.marketPlaceService.categoryFilterSelect(this.selectedCategoryFilterId);
-    this.selectedProductFilterId = 0;
-    this.marketPlaceService.productFilterSelect(this.selectedProductFilterId);
+  onCategoryFilterCheckboxChange(event: Event) {
+    const ckCategoryId = parseInt((<HTMLInputElement>event.target).value);
+    const obj = this.selectedCategoryFilterIdList.find(e => e === ckCategoryId);
+
+    if (obj == undefined)
+      this.selectedCategoryFilterIdList.push(ckCategoryId);
+    else
+      this.selectedCategoryFilterIdList = this.selectedCategoryFilterIdList.filter(e => e !== ckCategoryId);
+
+    this.filteredProductFilterList = this.filterProductFilterList();
+    console.log('cat, c/', this.filteredProductFilterList)
+
+    this.marketPlaceService.filterCheckboxChange(this.obtain());
   }
 
-  onProductFilterSelectChange() {
-    this.marketPlaceService.productFilterSelect(this.selectedProductFilterId);
+  onProductFilterCheckboxChange(event: Event) {
+    const ckProductId = parseInt((<HTMLInputElement>event.target).value);
+    const obj = this.selectedProductFilterIdList.find(e => e === ckProductId);
+
+    if (obj == undefined)
+      this.selectedProductFilterIdList.push(ckProductId);
+    else
+      this.selectedProductFilterIdList = this.selectedProductFilterIdList.filter(e => e !== ckProductId);
+
+    console.log('pro, c/', this.selectedCategoryFilterIdList)
+
+    this.marketPlaceService.filterCheckboxChange(this.obtain());
   }
 
-  private filterProductFilterList(categoryFilterId: number): ProductFilter[] {
-    if (categoryFilterId == 0) {
-      return [];
-    }
+  private filterProductFilterList(): ProductFilter[] {
+    return this.productFilterList.filter(
+      (productFilter) => {
+        const obj = this.selectedCategoryFilterIdList.find(e => e === productFilter.categoryFilterId);
 
-    return this.productFilterList.filter((productFilter) => productFilter.categoryFilterId == categoryFilterId);
+        return obj != undefined;
+      }
+    );
+  }
+
+  private obtain(): number[] {
+    let ignore = new Set();
+
+    this.selectedProductFilterIdList.forEach(
+      spf => {
+        const id = this.filteredProductFilterList.find(e => e.id === spf)?.categoryFilterId;
+        ignore.add(id);
+      }
+    );
+
+    const noignore = this.filteredProductFilterList.filter(
+      (obj) => !ignore.has(obj.categoryFilterId) || this.selectedProductFilterIdList.includes(obj.id)
+    ).map((obj) => { return obj.id });
+
+    return noignore.length !== 0 ? noignore : this.productFilterList.map((obj) => { return obj.id });
   }
 }

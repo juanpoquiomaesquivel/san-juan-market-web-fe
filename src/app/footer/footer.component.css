@@ -1,0 +1,88 @@
+.jx-footer {
+    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
+    background-color: #a8144c;
+    padding: 12px 0;
+}
+
+.jx-footer .container:first-child {
+    background: #680c3450;
+    border-radius: 12px;
+    padding: 8px 0;
+}
+
+.jx-footer .jx-title {
+    padding: 8px 0px;
+}
+
+.jx-footer .jx-title span {
+    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: white;
+}
+
+.jx-footer .jx-payment-methods {
+    padding: 8px 0;
+    justify-content: center;
+    user-select: none;
+}
+
+.jx-footer .jx-payment-methods span {
+    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+}
+
+.jx-footer .jx-payment-methods span.coming-soon {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #a5ff2f;
+    margin-left: 12px;
+}
+
+.jx-footer img {
+    width: auto;
+    height: 45px;
+    user-select: none;
+}
+
+.jx-footer .jx-payment-methods img {
+    margin-left: 12px;
+}
+
+.jx-footer .container:nth-child(2) {
+    margin-top: 8px;
+    border-radius: 12px;
+    padding: 8px 0;
+}
+
+.jx-footer .jx-text {
+    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    text-transform: capitalize;
+}
+
+.jx-footer .jx-text span {
+    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
+    font-weight: 500;
+    text-transform: lowercase;
+}
+
+.google-map {
+    margin-top: 8px;
+    padding-bottom: 50%;
+    position: relative;
+}
+
+.google-map iframe {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+}

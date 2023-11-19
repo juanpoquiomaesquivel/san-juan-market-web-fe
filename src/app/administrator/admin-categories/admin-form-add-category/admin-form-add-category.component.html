@@ -7,11 +7,13 @@
     <mat-icon>close</mat-icon>
 </button>
 
-<div class="text-center h5 px-2" style="margin-top: 50px; margin-bottom: 2px">
+<div class="text-center h5 px-2" style="margin-top: 50px; margin-bottom: 2px"  *ngIf="!isLoading">
     <span style="font-weight: bold">AGREGAR NUEVA CATEGORÍA</span>
 </div>
 
-<div mat-dialog-content style="padding: 15px; color: black">
+<div class="spinner my-3" *ngIf="isLoading"></div>
+
+<div mat-dialog-content style="padding: 15px; color: black" *ngIf="!isLoading">
     <div class="row gap-2 mb-3">
         <div class="col-12">
             <div style="font-weight: bold">Adicione etiquetas</div>

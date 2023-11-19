@@ -4,6 +4,8 @@ import { Category } from 'src/app/Models/Administrator/category.model';
 import { ClassOption } from 'src/app/Models/Administrator/class-option.model';
 import { FamilyOptionGroup } from 'src/app/Models/Administrator/family-option-group.model';
 import { AdministratorService } from 'src/app/Services/administrator.service';
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-form-add-category',
@@ -32,22 +34,29 @@ export class AdminFormAddCategoryComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public categoryData: Category, private administratorService: AdministratorService) { }
 
+  protected isLoading: boolean;
+
   ngOnInit() {
-    this.administratorService.onLoadFamilyOptionGroupList().subscribe(
+    this.isLoading = true;
+    const req1 = this.administratorService.onLoadFamilyOptionGroupList();
+    /* req1.subscribe(
       (familyOptionGroupListData) => {
         this.familyOptionGroupList = familyOptionGroupListData;
-
-        this.administratorService.onLoadAvailableClassOptionList().subscribe(
-          (classOptionListData) => {
-            this.classOptionList = classOptionListData;
-            this.filterClassOptionList();
-          }
-        );
       }
-    );
+    ); */
+
+    const req2 = this.administratorService.onLoadAvailableClassOptionList();
+    /* req2.subscribe(
+      (classOptionListData) => {
+        this.classOptionList = classOptionListData;
+        this.filterClassOptionList();
+      }
+    ); */
 
     if (this.categoryData != undefined) {
-      this.administratorService.onLoadCurrentClassOptionList(this.categoryData.id).subscribe(
+      const req3 = this.administratorService.onLoadCurrentClassOptionList(this.categoryData.id);
+
+      req3.subscribe(
         (data) => {
           this.selectedClassOptionList = data;
         }
@@ -55,6 +64,20 @@ export class AdminFormAddCategoryComponent {
       this.categoryName = this.categoryData.name;
       this.categoryDescription = this.categoryData.description;
     }
+
+    forkJoin([req1, req2])
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      ).subscribe(
+        ([familyOptionGroupListData, classOptionListData]) => {
+          this.familyOptionGroupList = familyOptionGroupListData;
+          this.classOptionList = classOptionListData;
+          this.filterClassOptionList();
+          this.isLoading = false;
+        }
+      )
   }
 
   private filterClassOptionList() {
