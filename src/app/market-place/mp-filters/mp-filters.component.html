@@ -43,7 +43,7 @@
             {{ "productos" | uppercase }}
         </div>
         <div class="row m-0 p-0 scrolly">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div *ngFor="let cat of categoryFilterList">
                     <div
                         *ngIf="selectedCategoryFilterIdList.includes(cat.id)"
@@ -77,6 +77,14 @@
                                 <p class="jx-product-title">
                                     {{ productFilter.name | uppercase }}
                                 </p>
+                                <i
+                                    *ngIf="
+                                        selectedProductFilterIdList.includes(
+                                            productFilter.id
+                                        )
+                                    "
+                                    class="bi bi-check"
+                                ></i>
                             </label>
                         </div>
                     </ng-container>

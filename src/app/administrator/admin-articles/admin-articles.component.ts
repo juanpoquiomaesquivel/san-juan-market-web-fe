@@ -16,34 +16,37 @@ export class AdminArticlesComponent {
   private articleList: Article[];
   protected filteredArticleList: Article[];
 
-  ngOnInit(): void {
+  private fetchData() {
     this.administratorService.onLoadAllArticles().subscribe(
       (allArticles) => {
         this.articleList = allArticles;
-        this.filteredArticleList = this.articleList;
+        this.filteredArticleList = this.articleList.filter((a) => a.name.toLowerCase().includes(this.keyword.toLowerCase()));
       }
     );
   }
 
-  protected listOfHeaders: string[] = ['#', 'Código', 'Nombre', 'Descripción', 'Precio', 'Stock', 'Imagen', 'Código de barras', '', ''];
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  protected listOfHeaders: string[] = ['#', 'Código', 'Nombre', 'Descripción', 'Precio', 'Stock', 'Imagen', 'Código de barras', 'Acciones'];
   protected listOfWidths = [
     { width: '4%' },
     { width: '10%' },
-    { width: '30%' },
-    { width: '10%' },
+    { width: '20%' },
+    { width: '20%' },
     { width: '8%' },
     { width: '8%' },
     { width: '8%' },
     { width: '8%' },
-    { width: '7%' },
-    { width: '7%' }
+    { width: '14%' }
   ];
 
   protected editButtonLabel: string = 'Editar';
   protected deleteButtonLabel: string = 'Eliminar';
 
   p: number = 1; // Current page number
-  itemsPerPage: number = 5; // Items per page
+  itemsPerPage: number = 10; // Items per page
 
   // Function to change the page
   onPageChange(newPage: number): void {
@@ -53,8 +56,16 @@ export class AdminArticlesComponent {
   protected previousLabel: string = 'Anterior';
   protected nextLabel: string = 'Siguiente';
 
-  onSearchButtonClicked(data: string) {
-    // this.getCategoriesByName(data);
+  protected keyword: string = '';
+
+
+  onSearchInputChangeEvent(keyword: string) {
+    this.keyword = keyword;
+    this.filteredArticleList = this.articleList.filter((a) => a.name.toLowerCase().includes(this.keyword.toLowerCase()));
+  }
+
+  onUpdateButtonClick() {
+    this.fetchData();
   }
 
   protected onAddArticleButtonClick() {

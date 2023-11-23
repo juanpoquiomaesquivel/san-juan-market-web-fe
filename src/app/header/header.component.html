@@ -1,51 +1,51 @@
-<nav class="navbar navbar-expand-md px-0 py-3 jx-navbar">
-    <div class="container-fluid">
-        <a class="navbar-brand m-0">
-            <img
-                [src]="
-                    'https://masterbundles.com/wp-content/uploads/2023/02/bakery-logo3-451.png'
-                "
-                class="align-self-center"
-                width="100px"
-            />
-        </a>
+<nav class="navbar navbar-expand-md p-3 jx-navbar">
+    <div class="container-fluid m-0 p-0">
+        <div class="row w-100 text-center align-items-center">
+            <div class="col-4">
+                <div class="logo">
+                    <a href="#">
+                        <h3>
+                            {{ "san juan" | uppercase }}
+                        </h3>
+                        <p>
+                            {{ "market web" | uppercase }}
+                        </p>
+                    </a>
+                </div>
+            </div>
 
-        <button
-            type="button"
-            class="navbar-toggler"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarScroll"
-            aria-controls="navbarScroll"
-            aria-expanded="false"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="jx-navbar-container" id="navbarScroll">
-            <ul class="nav justify-content-center">
-                <li
-                    class="jx-nav-item"
-                    *ngFor="let route of routes"
-                    [routerLinkActive]="['jx-nav-item-active']"
+            <div class="col-4 d-flex justify-content-center">
+                <button
+                    type="button"
+                    class="navbar-toggler"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll"
+                    aria-expanded="false"
                 >
-                    <a
-                        [routerLinkActive]="['jx-nav-item-link-active']"
-                        class="jx-nav-item-link"
-                        [routerLink]="route.link"
-                        >{{ route.name | uppercase }}</a
-                    >
-                </li>
-            </ul>
-        </div>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        <a class="navbar-brand m-0">
-            <img
-                [src]="
-                    'https://masterbundles.com/wp-content/uploads/2023/02/bakery-logo3-451.png'
-                "
-                class="align-self-center"
-                width="100px"
-            />
-        </a>
+                <div class="jx-navbar-container" id="navbarScroll">
+                    <ul class="nav justify-content-center">
+                        <li
+                            class="jx-nav-item"
+                            *ngFor="let route of routes"
+                            [routerLinkActive]="['jx-nav-item-active']"
+                        >
+                            <a
+                                [routerLinkActive]="['jx-nav-item-link-active']"
+                                class="jx-nav-item-link"
+                                [routerLink]="route.link"
+                                >{{ route.name | uppercase }}</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-4">
+            </div>
+        </div>
     </div>
 </nav>

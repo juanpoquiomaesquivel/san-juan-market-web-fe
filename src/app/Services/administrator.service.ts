@@ -78,7 +78,7 @@ export class AdministratorService {
     );
   }
 
-  onEditCategory(categoryId: number, categoryName: string, categoryDescription: string, addClassIdArray: string, removeClassIdArray: string): Observable<String> {
+  onEditCategory(categoryId: number, categoryName: string, categoryDescription: string, addClassIdArray: string, removeClassIdArray: string): Observable<Message> {
     const headers = new HttpHeaders(
       {
         'Content-Type': "application/json",
@@ -90,9 +90,11 @@ export class AdministratorService {
     this.httpClient.put<Message>(`${this.baseUrl}/class/api/put/classtag/forcategory/${categoryId}/add`, addClassIdArray, { headers }).subscribe();
     this.httpClient.put<Message>(`${this.baseUrl}/class/api/put/classtag/remove`, removeClassIdArray, { headers }).subscribe();
 
-    return new Observable<string>(
+    return new Observable<Message>(
       (obs) => {
-        obs.next('Categoria actualizada.');
+        setTimeout(() => {
+          obs.next(new Message(102, 'Articulo actualizado'));
+        }, 5000);
       }
     );
   }

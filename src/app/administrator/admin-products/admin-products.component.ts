@@ -18,30 +18,32 @@ export class AdminProductsComponent {
   private productList: Product[];
   protected filteredProductList: Product[];
 
-  ngOnInit(): void {
+  private fetchData() {
     this.administratorService.onLoadAllProducts().subscribe(
       (allProducts) => {
         this.productList = allProducts;
-        this.filteredProductList = this.productList;
+        this.filteredProductList = this.productList.filter((p) => p.name.toLowerCase().includes(this.keyword.toLowerCase()));
       }
     );
   }
 
-  protected listOfHeaders: string[] = ['#', 'Código', 'Nombre', 'Descripción', '', ''];
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  protected listOfHeaders: string[] = ['#', 'Código', 'Nombre', 'Descripción', 'Acciones'];
   protected listOfWidths = [
     { width: '4%' },
     { width: '10%' },
     { width: '30%' },
     { width: '42%' },
-    { width: '7%' },
-    { width: '7%' },
-  ];
+    { width: '14%' }];
 
   protected editButtonLabel: string = 'Editar';
   protected deleteButtonLabel: string = 'Eliminar';
 
   p: number = 1; // Current page number
-  itemsPerPage: number = 5; // Items per page
+  itemsPerPage: number = 10; // Items per page
 
   // Function to change the page
   onPageChange(newPage: number): void {
@@ -51,8 +53,15 @@ export class AdminProductsComponent {
   protected previousLabel: string = 'Anterior';
   protected nextLabel: string = 'Siguiente';
 
-  onSearchButtonClicked(data: string) {
-    // this.getCategoriesByName(data);
+  protected keyword: string = '';
+
+  onSearchInputChangeEvent(keyword: string) {
+    this.keyword = keyword;
+    this.filteredProductList = this.productList.filter((p) => p.name.toLowerCase().includes(this.keyword.toLowerCase()));
+  }
+
+  onUpdateButtonClick() {
+    this.fetchData();
   }
 
   protected onAddProductButtonClick() {

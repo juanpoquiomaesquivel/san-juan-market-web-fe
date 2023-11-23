@@ -20,7 +20,9 @@ export class AdminCategoriesComponent {
   protected isFiltering: boolean;
   protected isEmpty: boolean;
 
-  ngOnInit(): void {
+  private keyword: string = '';
+
+  private fetchData() {
     this.isFetching = true;
 
     this.administratorService.onLoadAllCategories().subscribe(
@@ -28,21 +30,24 @@ export class AdminCategoriesComponent {
         this.isFetching = false;
         this.categoryList = categoryListData;
         this.isFiltering = true;
-        this.filteredCategoryList = this.categoryList;
+        this.filteredCategoryList = this.categoryList.filter((cat) => cat.name.toLowerCase().includes(this.keyword.toLowerCase()));
         this.isFiltering = false;
         this.isEmpty = (this.categoryList.length === 0);
       }
     );
   }
 
-  protected listOfHeaders: string[] = ['#', 'Código', 'Nombre', 'Descripción', '', ''];
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  protected listOfHeaders: string[] = ['#', 'Código', 'Nombre', 'Descripción', 'Acciones'];
   protected listOfWidths = [
     { width: '4%' },
     { width: '10%' },
     { width: '30%' },
     { width: '42%' },
-    { width: '7%' },
-    { width: '7%' },
+    { width: '14%' }
   ];
 
 
@@ -50,7 +55,7 @@ export class AdminCategoriesComponent {
   protected deleteButtonLabel: string = 'Eliminar';
 
   p: number = 1; // Current page number
-  itemsPerPage: number = 5; // Items per page
+  itemsPerPage: number = 10; // Items per page
 
   // Function to change the page
   onPageChange(newPage: number): void {
@@ -60,8 +65,13 @@ export class AdminCategoriesComponent {
   protected previousLabel: string = 'Anterior';
   protected nextLabel: string = 'Siguiente';
 
-  onSearchButtonClicked(keyword: string) {
-    this.filteredCategoryList = this.categoryList.filter((cat) => cat.name.toLowerCase().includes(keyword.toLowerCase()));
+  onSearchInputChangeEvent(keyword: string) {
+    this.keyword = keyword;
+    this.filteredCategoryList = this.categoryList.filter((cat) => cat.name.toLowerCase().includes(this.keyword.toLowerCase()));
+  }
+
+  onUpdateButtonClick() {
+    this.fetchData();
   }
 
   protected onAddButtonClick() {
@@ -71,10 +81,12 @@ export class AdminCategoriesComponent {
 
     dg.afterClosed().subscribe(
       (response) => {
-        if (response != false) {
+        if (response != undefined) {
           this.administratorService.onAddCategory(response[0], response[1], response[2]).subscribe(
             (msg) => {
-              console.log(msg);
+              if (msg.code === 101) {
+                this.fetchData();
+              }
             }
           );
         }
@@ -96,7 +108,9 @@ export class AdminCategoriesComponent {
         if (response != false) {
           this.administratorService.onEditCategory(categoryId, response[0], response[1], response[2], response[3]).subscribe(
             (msg) => {
-              console.log(msg);
+              if (msg.code === 102) {
+                this.fetchData();
+              }
             }
           );
         }

@@ -8,7 +8,7 @@ import { MarketPlaceService } from 'src/app/Services/market-place.service';
 })
 export class MpSearchComponent {
 
-  protected searchLabelPlaceholder = 'Buscar articulos'
+  protected searchLabelPlaceholder = 'Buscar articulos';
 
   protected keyword: string = '';
 

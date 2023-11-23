@@ -16,3 +16,163 @@
         transform: rotate(-360deg);
     }
 }
+
+/**/
+.title {
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.add-btn {
+    height: 40px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 25px;
+    margin: 0;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease-in-out;
+}
+
+.add-btn:hover {
+    border-color: #a8144d;
+}
+
+.add-btn:active {
+    border: 1px solid #ce0059;
+    box-shadow: 0 0 0 1px #ce0059 inset;
+}
+
+.add-btn i {
+    font-size: 1.4em;
+    margin-right: 4px;
+    transition: 0.3s ease-in-out;
+}
+
+.add-btn span {
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
+}
+
+.add-btn:hover i,
+.add-btn:hover span {
+    color: #a8144d;
+}
+
+.add-btn:active i,
+.add-btn:active span {
+    color: #ce0059;
+}
+
+/* add-btn-sm */
+.add-btn-sm {
+    height: 30px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 25px;
+    margin: 0;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease-in-out;
+}
+
+.add-btn-sm:hover {
+    border-color: #a8144d;
+}
+
+.add-btn-sm:active {
+    border: 1px solid #ce0059;
+    box-shadow: 0 0 0 1px #ce0059 inset;
+}
+
+.add-btn-sm i {
+    font-size: 1.2em;
+    margin-right: 4px;
+    transition: 0.3s ease-in-out;
+}
+
+.add-btn-sm span {
+    font-size: 12px;
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
+}
+
+.add-btn-sm:hover i,
+.add-btn-sm:hover span {
+    color: #a8144d;
+}
+
+.add-btn-sm:active i,
+.add-btn-sm:active span {
+    color: #ce0059;
+}
+
+/* table */
+table {
+    width: 100%;
+}
+
+tr th {
+    padding: 8px 16px;
+    background-color: #a8144d;
+    transition: 0.3s ease-in-out;
+}
+
+tr td {
+    padding: 8px 16px;
+    transition: 0.3s ease-in-out;
+}
+
+table:hover tr th {
+    background-color: #ce0059;
+}
+
+th {
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #d1d1d1;
+}
+
+td {
+    color: #000000;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #ececec;
+}
+
+tr:hover td {
+    background-color: #dddddd;
+}
+
+/*scroll*/
+.scrolly {
+    overflow-x: auto;
+    scrollbar-width: 2px;
+}
+
+/* Chrome, Edge, and Safari */
+.scrolly::-webkit-scrollbar {
+    height: 4px;
+}
+
+.scrolly::-webkit-scrollbar-track {
+    background: none;
+}
+
+.scrolly::-webkit-scrollbar-thumb {
+    background-color: #a5ff2f;
+    border-radius: 0px;
+    border: 0px solid #cccccc;
+}
