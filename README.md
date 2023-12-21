@@ -2,26 +2,24 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Angular 16.2.0
 
-## Code scaffolding
+This project has used the latest version of Angular Framework as Front End.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Bootstrap 5, CSS
 
-## Build
+This project was built with the framework Bootstrap and customized with native CSS.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Spring Boot
 
-## Running unit tests
+The Back End was built within a microservice architecture for each of the shown modules.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### MS SQL Server
 
-## Running end-to-end tests
+Database was implemented in Microsoft SQL Server 19.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## DEMO
+(https://drive.google.com/file/d/17hMHtChPRFAGlhyPJ0NvkK0a30kxZCLF/view?usp=drive_link)
+Link: https://drive.google.com/file/d/17hMHtChPRFAGlhyPJ0NvkK0a30kxZCLF/view?usp=sharing

@@ -1,0 +1,25 @@
+* {
+    font-size: 28px;
+}
+
+.close-button {
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    border-radius: 100%;
+    float: right;
+}
+
+.close-button:hover {
+    background-color: #f0f0f0;
+}
+
+.close-button i {
+    color: #5e5e5e;
+    font-size: 0.65em;
+}
+
+.close-button:hover i {
+    color: #0e0e0e;
+}

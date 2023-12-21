@@ -1,0 +1,314 @@
+* {
+    font-size: 28px;
+    outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.container {
+    margin: 30px 0 0 0;
+    padding: 16px;
+}
+
+.title {
+    color: #000;
+    font-size: 0.85em;
+    font-weight: 900;
+    line-height: 1.5cap;
+}
+
+.label {
+    color: #000;
+    font-size: 0.55em;
+    font-weight: 500;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #aeaeae;
+    border-top: 4px solid #a8144d;
+    border-radius: 100%;
+    margin: auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* close button */
+
+.close-button {
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    border-radius: 100%;
+    float: right;
+}
+
+.close-button:hover {
+    background-color: #f0f0f0;
+}
+
+.close-button i {
+    color: #5e5e5e;
+    font-size: 0.65em;
+}
+
+.close-button:hover i {
+    color: #0e0e0e;
+}
+
+/* body button */
+
+.dg-button {
+    width: auto;
+    height: auto;
+    background-color: #a8144d;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.333s ease-in-out;
+}
+
+.form-field {
+    position: relative;
+}
+
+.form-field .dg-input + label {
+    color: #5e5e5e;
+    position: absolute;
+    font-size: 0.5em;
+    text-transform: capitalize;
+    top: 5px;
+    left: 11px;
+    transition: 0.333s ease-in-out all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-field .dg-input:focus + label,
+.form-field .dg-input.has-content + label {
+    height: 14px;
+    font-size: 0.45em;
+    padding: 0 4px;
+    top: -7px;
+    background-color: #fff;
+    line-height: normal;
+}
+
+.form-field .dg-input:focus + label,
+.form-field .dg-input.has-content:focus + label {
+    color: #ce0059;
+}
+
+.form-field .dg-input.has-content:not(:focus) + label {
+    color: #5e5e5e;
+}
+
+.form-field .dg-input:not(:focus):hover + label,
+.form-field .dg-input.has-content:not(:focus):hover + label {
+    color: #a8144d;
+}
+
+.form-field button:not(.dg-button) {
+    color: #5e5e5e;
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    border-radius: 100%;
+    margin: 0;
+    padding: 0;
+    transition: 0.333s ease-in-out;
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    z-index: 10;
+}
+
+.form-field button i {
+    font-size: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.333s ease-in-out;
+}
+
+.form-field button:hover i {
+    color: #0e0e0e;
+}
+
+.dg-button {
+    height: 36px;
+}
+
+.dg-button span {
+    color: #fff;
+    font-size: 0.5em;
+    font-weight: 500;
+}
+
+.dg-button:disabled {
+    background-color: #aeaeae;
+}
+
+.dg-button:not(:disabled):hover {
+    background-color: #ce0059;
+}
+
+.dg-button:not(:disabled):active {
+    transform: scale(0.98);
+    transition: 0s;
+}
+
+.form-field .dg-input {
+    color: #000;
+    width: 100%;
+    height: 36px;
+    background: none;
+    border: 1px solid #5e5e5e;
+    border-radius: 8px;
+    padding: 0 36px 0 11px;
+    font-size: 0.5em;
+    transition: 0.333s ease-in-out;
+}
+
+.form-field select.dg-input {
+    color: #5e5e5e;
+    padding: 0 11px;
+}
+
+/* .form-field select.dg-input option:hover {
+    color: #fff;
+    background-color: #ce0059;
+} */
+
+.form-field .dg-input:hover {
+    border-color: #a8144d;
+}
+
+.form-field select.dg-input:hover {
+    color: #a8144d;
+}
+
+.form-field select.dg-input:focus {
+    color: #ce0059;
+}
+
+.form-field .dg-input:focus {
+    outline: none;
+    border-color: #ce0059;
+    box-shadow: 0 0 0 1px #ce0059;
+}
+
+.form-field textarea.dg-input {
+    height: 90px !important;
+    resize: none;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    overflow-y: auto;
+    scrollbar-width: 0;
+}
+
+.form-field textarea.dg-input::-webkit-scrollbar {
+    width: 0;
+}
+
+.form-field textarea.dg-input::-webkit-scrollbar-track {
+    background: none;
+}
+
+.form-field textarea.dg-input::-webkit-scrollbar-thumb {
+    background: none;
+    border: none;
+}
+
+small {
+    color: red;
+    font-size: 0.4em;
+    display: flex;
+}
+
+.form-field div.tag-badge {
+    height: 36px;
+    background-color: #a8144d;
+    border: none;
+    border-radius: 12px;
+    padding: 6px 36px 6px 11px;
+    position: relative;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    transition: 0.333s ease-in-out;
+}
+
+.form-field div.tag-badge:hover {
+    background-color: #ce0059;
+}
+
+.form-field div.tag-badge span {
+    color: #fff;
+    font-size: 1em;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.form-field div.tag-badge button {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
+.form-field div.tag-badge button i {
+    color: #fff;
+    font-size: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*scroll*/
+.scrolly {
+    /* overflow-y: hidden; */
+    overflow-y: auto;
+    scrollbar-width: 0px;
+}
+
+.scrolly::-webkit-scrollbar {
+    width: 2px;
+}
+
+.scrolly::-webkit-scrollbar-track {
+    background: none;
+}
+
+.scrolly::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 0px;
+    border: 2px solid #a8144d;
+}

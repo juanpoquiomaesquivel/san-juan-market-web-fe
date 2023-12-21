@@ -13,62 +13,61 @@ export class MpArticlesComponent {
 
   protected articleCardList: ArticleCard[] = [];
   protected filteredArticleCardList: ArticleCard[] = [];
+  protected webPageDataStatus: string = '';
 
   private keyword: string = '';
   private selectedProductFilterIdList: number[] = [];
-
-  protected isFetching: boolean = true;
-  protected isFiltering: boolean = false;
-  protected isEmpty: boolean = true;
 
   protected totalOfResults: number;
 
   constructor(private marketPlaceService: MarketPlaceService) { }
 
-  ngOnInit() {
-    this.isFetching = true;
+  private fetchData() {
+    this.webPageDataStatus = 'fetching';
 
     this.marketPlaceService.onLoadArticleCardList().subscribe(
       {
         next: (articleCardListData) => {
+          this.webPageDataStatus = 'loading';
           this.articleCardList = articleCardListData;
-          this.isFetching = false;
-          this.isFiltering = true;
-          this.filteredArticleCardList =this.articleCardList;
-          this.isFiltering = false;
-          this.isEmpty = (this.articleCardList.length === 0);
+          this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
         },
         error: () => {
-          this.isFetching = false;
-          this.isFiltering = false;
-          this.isEmpty = true;
+          this.webPageDataStatus = 'error';
+        },
+        complete: () => {
+          setTimeout(() => {
+            this.webPageDataStatus = this.filteredArticleCardList.length === 0 ? 'empty' : 'data';
+          }, 1000);
         }
       }
     );
+  }
+
+  ngOnInit() {
+    this.fetchData()
 
     this.marketPlaceService.onSearchFilterButtonClicked.subscribe(
       (keyword) => {
-        this.isFiltering = true;
+        this.webPageDataStatus = 'loading';
         this.keyword = keyword;
         this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
-        this.isFiltering = false;
-        this.isEmpty = (this.articleCardList.length === 0);
+        this.webPageDataStatus = this.filteredArticleCardList.length === 0 ? 'empty' : 'data';
       }
     );
 
     this.marketPlaceService.onFilterCheckboxChanged.subscribe(
       (selectedProductFilterIdListData) => {
-        this.isFiltering = true;
+        this.webPageDataStatus = 'loading';
         this.selectedProductFilterIdList = selectedProductFilterIdListData;
         this.filteredArticleCardList = this.filterArticleCardList(this.keyword);
-        this.isFiltering = false;
-        this.isEmpty = (this.articleCardList.length === 0);
+        this.webPageDataStatus = this.filteredArticleCardList.length === 0 ? 'empty' : 'data';
       }
     );
   }
 
   private filterArticleCardList(keyword: string): ArticleCard[] {
-    let aux = this.articleCardList;
+    let aux = this.articleCardList.slice();
 
     aux = aux.filter(
       (art) => this.selectedProductFilterIdList.includes(art.productId)

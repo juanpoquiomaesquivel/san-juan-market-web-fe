@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-admin-article-search',
@@ -9,8 +9,9 @@ export class AdminArticleSearchComponent {
 
   protected searchedValue: string = '';
 
-  @Output()
-  searchInputChange: EventEmitter<string> = new EventEmitter<string>();
+
+  @Input() inputPlaceholder: string = '';
+  @Output()  searchInputChange: EventEmitter<string> = new EventEmitter<string>();
 
   protected onClearButtonClick() {
     this.searchedValue = '';

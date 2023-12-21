@@ -14,8 +14,8 @@ export class HeaderComponent {
   constructor(private router: Router) { }
 
   routes: any = [
-    {link: 'home', name: 'Inicio'},
-    {link: 'market-place', name: 'Tienda'},
-    {link: 'administrator', name: 'Administrador'}
+    { link: 'home', name: 'Inicio', icon: 'bi bi-house-door-fill' },
+    { link: 'market-place', name: 'Tienda', icon: 'bi bi-cart-fill' },
+    { link: 'administrator', name: 'Administrador', icon: 'bi bi-tools' }
   ]
 }

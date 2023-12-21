@@ -9,8 +9,8 @@ import { AdministratorService } from '../Services/administrator.service';
 })
 export class AdministratorComponent {
   routes: any = [
-    {link: 'administrator-categories', name: 'Administrador de categorías'},
-    {link: 'administrator-products', name: 'Administrador de productos'},
-    {link: 'administrator-articles', name: 'Administrador de artículos'},
+    {link: 'categories', name: 'Categorías'},
+    {link: 'products', name: 'Productos'},
+    {link: 'articles', name: 'Artículos'},
   ]
 }

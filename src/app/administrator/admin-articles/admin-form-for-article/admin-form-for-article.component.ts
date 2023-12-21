@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ArticleItem } from 'src/app/Models/Administrator/article-item.model';
 import { Article } from 'src/app/Models/Administrator/article.model';
 import { ProductOption } from 'src/app/Models/Administrator/product-option.model';
 import { AdministratorService } from 'src/app/Services/administrator.service';
@@ -10,52 +12,82 @@ import { AdministratorService } from 'src/app/Services/administrator.service';
   styleUrls: ['./admin-form-for-article.component.css']
 })
 export class AdminFormForArticleComponent {
+  protected articleFormTitle = "nuevo artículo";
+  protected articleFormSaveButtonTitle = "agregar";
 
-  protected productOptionList: ProductOption[];
-  protected selectedProductOptionId: number = 0;
+  protected productOptionList: ProductOption[] = [];
 
-  protected articleName: string = '';
-  protected articleDescription: string = '';
-  protected articlePrice: number = 0;
-  protected articleStock: number = 0;
-  protected articleImg: string = '';
-  protected articleBarCode: string = '';
+  private articleName: string = '';
+  private articleDescription: string = '';
+  private articlePrice: number = null;
+  private articleImage: string = '';
+  private articleBarCode: string = '';
 
-  protected result() {
-    return new Article(
-      this.articleData != undefined ? this.articleData.id : null,
-      null,
-      this.articleName,
-      this.articleDescription,
-      this.articlePrice,
-      this.articleStock,
-      this.articleImg,
-      this.articleBarCode,
-      this.selectedProductOptionId
-    )
-  }
+  protected articleForm: FormGroup;
 
-  protected onProductOptionSelectChange(event: Event) {
-    this.selectedProductOptionId = parseInt((<HTMLSelectElement>event.target).value);
-  }
+  constructor(private matDialogRef: MatDialogRef<AdminFormForArticleComponent>, @Inject(MAT_DIALOG_DATA) public articleData: ArticleItem, private administratorService: AdministratorService) { }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public articleData: Article, private administratorService: AdministratorService) { }
+  protected isLoading: boolean;
 
   ngOnInit() {
+    this.administratorService.onLoadProductOptionList().subscribe(
+      {
+        next: (productOptionListData) => {
+          this.productOptionList = productOptionListData;
+        }
+      }
+    );
+
     if (this.articleData != undefined) {
+      this.articleFormTitle = "editar artículo";
+      this.articleFormSaveButtonTitle = "guardar";
       this.articleName = this.articleData.name;
       this.articleDescription = this.articleData.description;
       this.articlePrice = this.articleData.price;
-      this.articleStock = this.articleData.stock;
-      this.articleImg = this.articleData.img;
+      this.articleImage = this.articleData.image;
       this.articleBarCode = this.articleData.barCode;
-      this.selectedProductOptionId = this.articleData.productId;
+
+      this.administratorService.onLoadProductIdOfArticle(this.articleData.id).subscribe(
+        {
+          next: (productIdData) => {
+            this.articleForm = new FormGroup(
+              {
+                product: new FormControl(productIdData, [Validators.required]),
+                name: new FormControl(this.articleName, [Validators.required]),
+                description: new FormControl(this.articleDescription, []),
+                price: new FormControl(this.articlePrice, [Validators.required]),
+                image: new FormControl(this.articleImage, []),
+                barcode: new FormControl(this.articleBarCode, [])
+              }
+            );
+          }
+        }
+      );
+    } else {
+      this.articleForm = new FormGroup(
+        {
+          product: new FormControl(1, [Validators.required]),
+          name: new FormControl(this.articleName, [Validators.required]),
+          description: new FormControl(this.articleDescription, []),
+          price: new FormControl(this.articlePrice, [Validators.required]),
+          image: new FormControl(this.articleImage, []),
+          barcode: new FormControl(this.articleBarCode, [])
+        }
+      );
     }
 
-    this.administratorService.onLoadProductOptionList().subscribe(
-      (dataProductOptionList) => {
-        this.productOptionList = dataProductOptionList;
-        this.selectedProductOptionId = this.selectedProductOptionId === 0 ? this.productOptionList.at(0).id : this.selectedProductOptionId;
+
+  }
+
+  OnFormSubmitted() {
+    this.matDialogRef.close(
+      {
+        name: this.articleForm.get('name').value,
+        description: this.articleForm.get('description').value,
+        price: this.articleForm.get('price').value,
+        image: this.articleForm.get('image').value,
+        barCode: this.articleForm.get('barcode').value,
+        product: this.articleForm.get('product').value,
       }
     );
   }

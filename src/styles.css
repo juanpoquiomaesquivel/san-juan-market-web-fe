@@ -142,3 +142,23 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+/* animation */
+
+@keyframes tilt-shaking {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(10deg);
+    }
+    50% {
+        transform: rotate(0eg);
+    }
+    75% {
+        transform: rotate(-15deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}

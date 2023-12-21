@@ -1,31 +1,31 @@
-export class ArticleCard {
+export class ArticleItem {
 
     id: number;
+    code: string;
     name: string;
     description: string;
     price: number;
     image: string;
     barCode: string;
-    productId: number;
-    categoryId: number;
+    product: string;
 
     constructor(
         id: number,
+        code: string,
         name: string,
         description: string,
         price: number,
         image: string,
         barCode: string,
-        productId: number,
-        categoryId: number
+        product: string
     ) {
         this.id = id;
+        this.code = code;
         this.name = name;
         this.description = description;
         this.price = price;
         this.image = image;
         this.barCode = barCode;
-        this.productId = productId;
-        this.categoryId = categoryId;
+        this.product = product;
     }
 }

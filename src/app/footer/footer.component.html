@@ -1,76 +1,88 @@
-<div class="jx-footer">
-    <div class="container">
-        <div class="text-center jx-title">
-            <span class="align-middle">MÉTODOS DE PAGO</span>
+<div class="container-fluid">
+    <div class="row py-3 gap-4 gap-sm-0">
+        <div class="col-12 mb-3">
+            <div class="payment-container">
+                <div class="title">MÉTODOS DE PAGO</div>
+                <div class="payment-methods">
+                    <ul
+                        class="d-block d-sm-flex justify-content-center align-items-center gap-4"
+                    >
+                        <li class="mb-2 mb-sm-0">
+                            <span>
+                                {{ "efectivo" | uppercase }}
+                            </span>
+                            <img
+                                src="assets/footer/cash.png"
+                                alt=""
+                                title="Efectivo"
+                            />
+                        </li>
+                        <li class="mb-2 mb-sm-0">
+                            <span>
+                                {{ "tarjetas" | uppercase }}
+                            </span>
+                            <span class="coming-soon text-uppercase"
+                                >Muy pronto...</span
+                            >
+                        </li>
+                        <li>
+                            <span>
+                                {{ "apps" | uppercase }}
+                            </span>
+                            <img
+                                src="assets/footer/yape.png"
+                                alt=""
+                                title="Yape"
+                            />
+                            <img
+                                src="assets/footer/plin.png"
+                                alt=""
+                                title="Plin"
+                            />
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="hstack gap-3 jx-payment-methods">
-            <div class="d-flex align-items-center">
-                <span class="text-capitalize">efectivo</span>
-                <img src="assets/footer/cash.png" alt="" title="Efectivo" />
+        <div class="col-12 col-sm-6 col-lg-4 sub-container">
+            <div class="title">
+                {{ "redes sociales" | uppercase }}
             </div>
-            <div class="vr" style="color: white"></div>
-            <div>
-                <span class="text-capitalize">tarjetas</span>
-                <span class="coming-soon text-uppercase">Muy pronto...</span>
-            </div>
-            <div class="vr" style="color: white"></div>
-            <div class="d-flex align-items-center">
-                <span class="text-capitalize">apps</span>
-                <img src="assets/footer/yape.png" alt="" title="Yape" />
-                <img src="assets/footer/plin.png" alt="" title="Plin" />
+            <div class="hstack gap-3">
+                <img src="assets/footer/facebook.png" alt="" title="Facebook" />
+                <img
+                    src="assets/footer/instagram.png"
+                    alt=""
+                    title="Instagram"
+                />
+                <img src="assets/footer/youtube.png" alt="" title="Youtube" />
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="jx-title">
-                    <span class="text-uppercase">redes sociales</span>
-                </div>
-                <div class="hstack gap-3">
-                    <img
-                        src="assets/footer/facebook.png"
-                        alt=""
-                        title="Facebook"
-                    />
-                    <img
-                        src="assets/footer/instagram.png"
-                        alt=""
-                        title="Instagram"
-                    />
-                    <img
-                        src="assets/footer/youtube.png"
-                        alt=""
-                        title="Youtube"
-                    />
-                </div>
+        <div class="col-12 col-sm-6 col-lg-4 sub-container">
+            <div class="title">
+                {{ "contactenos" | uppercase }}
             </div>
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="jx-title">
-                    <span class="text-uppercase">contáctanos</span>
-                </div>
-                <div class="jx-text">
-                    correo electrónico:
-                    <span class="text-lowercase">ejemplo@gmail.com</span>
-                </div>
-                <div class="jx-text">teléfono: <span>902 917 988</span></div>
+            <div class="jx-text">
+                correo electrónico:
+                <span class="text-lowercase">ejemplo@gmail.com</span>
             </div>
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="jx-title">
-                    <span class="text-uppercase">ubícanos</span>
-                </div>
-                <div class="jx-text">
-                    p.j. raúl porras barrenechea av. merino reyna mz. 112 lt 15
-                </div>
-                <div class="google-map">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d244.00846481142233!2d-77.01924284742098!3d-11.895656223848123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d1519ce83a27%3A0x9f3d30da9f2657f9!2sLLANTAS%20Y%20REPUESTO%20LEON!5e0!3m2!1sen!2spe!4v1700289115321!5m2!1sen!2spe"
-                        style="border: 0"
-                        allowfullscreen="false"
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                    ></iframe>
-                </div>
+            <div class="jx-text">teléfono: <span>902 917 988</span></div>
+        </div>
+        <div class="col-12 col-lg-4 sub-container">
+            <div class="title">
+                {{ "ubicanos" | uppercase }}
+            </div>
+            <div class="jx-text">
+                p.j. raúl porras barrenechea av. merino reyna mz. 112 lt 15
+            </div>
+            <div class="google-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d244.00846481142233!2d-77.01924284742098!3d-11.895656223848123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105d1519ce83a27%3A0x9f3d30da9f2657f9!2sLLANTAS%20Y%20REPUESTO%20LEON!5e0!3m2!1sen!2spe!4v1700289115321!5m2!1sen!2spe"
+                    style="border: 0"
+                    allowfullscreen="false"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
             </div>
         </div>
     </div>

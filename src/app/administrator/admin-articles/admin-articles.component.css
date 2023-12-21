@@ -1,11 +1,17 @@
+.container {
+    background-color: #f4f4f4;
+    border-radius: 24px;
+    font-size: 28px;
+}
+
 .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #aeaeae;
+    border-top: 4px solid #a8144d;
+    border-radius: 100%;
     margin: auto;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1.5s linear infinite;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -13,166 +19,202 @@
         transform: rotate(0deg);
     }
     100% {
-        transform: rotate(-360deg);
+        transform: rotate(360deg);
     }
 }
 
-/**/
 .title {
-    font-size: 24px;
+    font-size: 0.95em;
     font-weight: 800;
     text-align: center;
+    line-height: 1.5cap;
+    text-transform: uppercase;
 }
 
-.add-btn {
-    height: 40px;
-    background: #ffffff;
-    border: 1px solid #000000;
-    border-radius: 25px;
+.button {
+    color: #fff;
+    height: 36px;
+    background: #a8144d;
+    border: none;
+    border-radius: 24px;
     margin: 0;
-    padding: 8px 12px;
-    display: inline-flex;
+    padding: 12px 16px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.3s ease-in-out;
+    transition: 0.333s ease-in-out;
 }
 
-.add-btn:hover {
-    border-color: #a8144d;
+.button:hover {
+    color: #fff;
+    background: #ce0059;
 }
 
-.add-btn:active {
-    border: 1px solid #ce0059;
-    box-shadow: 0 0 0 1px #ce0059 inset;
+.button:active {
+    transform: translateY(1.5px);
+    transition-duration: 0s;
 }
 
-.add-btn i {
-    font-size: 1.4em;
+.button i,
+.button span {
+    font-size: 0.5em;
+    line-height: normal;
+}
+
+.button i {
     margin-right: 4px;
-    transition: 0.3s ease-in-out;
 }
 
-.add-btn span {
-    font-size: 14px;
+.button span {
     font-weight: 500;
-    transition: 0.3s ease-in-out;
+    display: block;
 }
 
-.add-btn:hover i,
-.add-btn:hover span {
-    color: #a8144d;
-}
-
-.add-btn:active i,
-.add-btn:active span {
-    color: #ce0059;
-}
-
-/* add-btn-sm */
-.add-btn-sm {
+/* button-sm */
+.button-sm {
+    color: #fff;
     height: 30px;
-    background: #ffffff;
-    border: 1px solid #000000;
-    border-radius: 25px;
+    background: #a8144d;
+    border: none;
+    border-radius: 100%;
     margin: 0;
-    padding: 8px 12px;
-    display: inline-flex;
+    padding: 8px 8px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.3s ease-in-out;
+    transition: 0.333s ease-in-out;
 }
 
-.add-btn-sm:hover {
-    border-color: #a8144d;
+.button-sm:hover {
+    background-color: #ce0059;
 }
 
-.add-btn-sm:active {
-    border: 1px solid #ce0059;
-    box-shadow: 0 0 0 1px #ce0059 inset;
+.button-sm:active {
+    transform: translateY(1px);
+    transition: none;
 }
 
-.add-btn-sm i {
-    font-size: 1.2em;
-    margin-right: 4px;
-    transition: 0.3s ease-in-out;
+.button-sm:disabled {
+    background-color: #aeaeae;
 }
 
-.add-btn-sm span {
-    font-size: 12px;
-    font-weight: 500;
-    transition: 0.3s ease-in-out;
-}
-
-.add-btn-sm:hover i,
-.add-btn-sm:hover span {
-    color: #a8144d;
-}
-
-.add-btn-sm:active i,
-.add-btn-sm:active span {
-    color: #ce0059;
+.button-sm i {
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* table */
 table {
-    width: 100%;
+    min-width: 100%;
+    table-layout: fixed;
 }
 
-tr th {
-    padding: 8px 16px;
+table tr th {
+    color: #fff !important;
     background-color: #a8144d;
-    transition: 0.3s ease-in-out;
+    border-radius: 12px 12px 0 0;
+    padding: 8px 16px;
+    font-size: 0.55em;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.333s ease-in-out;
 }
 
-tr td {
-    padding: 8px 16px;
-    transition: 0.3s ease-in-out;
+::ng-deep .mat-sort-header-container {
+    display: flex;
+    justify-content: center;
+}
+
+::ng-deep .mat-sort-header-arrow {
+    color: #fff; /*change color of arrow*/
 }
 
 table:hover tr th {
     background-color: #ce0059;
 }
 
-th {
-    text-align: center;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 16px;
+table tr td {
+    color: #000;
+    background-color: #fff;
+    padding: 8px 16px;
+    font-size: 0.5em;
     font-weight: 500;
-    background-color: #d1d1d1;
+    transition: 0.333s ease-in-out;
 }
 
-td {
-    color: #000000;
-    border: none;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: 400;
-    background-color: #ececec;
+table tr.optional td {
+    box-shadow: 1px -1px 0 0 #a8144d inset, -1px -1px 0 0 #a8144d inset !important;
+    border-radius: 0 0 12px 12px !important;
 }
 
-tr:hover td {
-    background-color: #dddddd;
+table:hover tr.optional td {
+    box-shadow: 1px -1px 0 0 #ce0059 inset, -1px -1px 0 0 #ce0059 inset !important;
+}
+
+table tr td:first-child {
+    box-shadow: 1px -1px 0 0 #a8144d inset;
+}
+
+table:hover tr td:first-child {
+    box-shadow: 1px -1px 0 0 #ce0059 inset;
+}
+
+table tr td:not(:first-child):not(:last-child) {
+    box-shadow: 0 -1px 0 0 #a8144d inset;
+}
+
+table:hover tr td:not(:first-child):not(:last-child) {
+    box-shadow: 0 -1px 0 0 #ce0059 inset;
+}
+
+table tr td:last-child {
+    box-shadow: -1px -1px 0 0 #a8144d inset;
+}
+
+table:hover tr td:last-child {
+    box-shadow: -1px -1px 0 0 #ce0059 inset;
+}
+
+table tr:last-child td:first-child {
+    border-radius: 0 0 0 12px;
+}
+
+table tr:last-child td:last-child {
+    border-radius: 0 0 12px 0;
+}
+
+table tr:hover td {
+    background-color: #ce005911;
+    color: #ce0059;
 }
 
 /*scroll*/
 .scrolly {
+    /* overflow-y: hidden; */
     overflow-x: auto;
-    scrollbar-width: 2px;
+    scrollbar-width: 0px;
 }
 
-/* Chrome, Edge, and Safari */
 .scrolly::-webkit-scrollbar {
-    height: 4px;
+    height: 16px;
 }
 
 .scrolly::-webkit-scrollbar-track {
-    background: none;
+    background: #e7e7e7;
 }
 
 .scrolly::-webkit-scrollbar-thumb {
-    background-color: #a5ff2f;
+    background-color: #c7c7c7;
     border-radius: 0px;
-    border: 0px solid #cccccc;
+    border: 2px solid #e7e7e7;
+}
+
+.scrolly::-webkit-scrollbar-thumb:hover {
+    background-color: #a8144d;
+}
+
+.scrolly::-webkit-scrollbar-thumb:active {
+    background-color: #ce0059;
 }

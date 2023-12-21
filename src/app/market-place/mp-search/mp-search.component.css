@@ -1,3 +1,50 @@
+.container {
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    position: relative;
+}
+
+.container label i,
+.container button i {
+    color: #5e5e5e;
+    font-size: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container label i,
+.container button {
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    border-radius: 100%;
+    margin: 0;
+    padding: 0;
+    transition: 0.333s ease-in-out;
+    position: absolute;
+    top: 3px;
+    z-index: 10;
+}
+
+.container label i {
+    left: 3px;
+}
+
+.container button {
+    right: 3px;
+}
+
+.container button:hover {
+    background-color: #f0f0f0;
+}
+
+.container button:hover i {
+    color: #0e0e0e !important;
+}
+
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
@@ -6,51 +53,33 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .container input {
-    width: 500px;
-    height: 40px;
-    background-color: #f3f3f3;
-    border: 1px solid #bebebe;
-    border-radius: 25px;
-    padding: 0 40px 0 16px;
-    font-size: 15px;
+    width: 100%;
+    height: 36px;
+    background-color: #ffffff;
+    border: 1px solid #5e5e5e;
+    border-radius: 24px;
+    padding: 0 36px;
+    font-size: 0.5em;
     font-weight: 400;
-    transition: 0.3s ease-in-out;
+    transition: 0.333s ease-in-out;
 }
 
 .container input:hover {
-    border-color: #a8144d;
+    border: 1px solid #a8144d;
+}
+
+.container input:hover:not(:focus) + label i {
+    color: #a8144d;
+    animation: tilt-shaking 0.333s 1 ease-in-out;
 }
 
 .container input:focus {
     outline: none;
     border: 1px solid #ce0059;
-    box-shadow: 0 0 0 1px #ce0059 inset;
+    box-shadow: 0 0 0 1px #ce0059;
 }
 
-.container button {
-    width: 30px;
-    height: 30px;
-    background: none;
-    border: none;
-    border-radius: 100%;
-    margin-left: -35px;
-    padding: 4px 12px;
-    transition: 0.3s ease-in-out;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.container button i {
-    font-size: 1.4em;
-}
-
-.container button:hover {
-    background-color: #dddddd;
-}
-
-.container button:active {
-    transform: scale(1.125);
-    transition: none;
+.container input:focus + label i {
+    color: #ce0059;
+    transform: scale(1.15);
 }

@@ -1,76 +1,74 @@
-.jx-footer {
-    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
+.container-fluid {
     background-color: #a8144c;
-    padding: 12px 0;
 }
 
-.jx-footer .container:first-child {
+.payment-container {
+    padding: 16px 0;
     background: #680c3450;
     border-radius: 12px;
-    padding: 8px 0;
 }
 
-.jx-footer .jx-title {
-    padding: 8px 0px;
-}
-
-.jx-footer .jx-title span {
-    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
-    font-size: 25px;
+.payment-container .title {
+    color: #fff;
+    margin: 0;
+    padding: 6px 8px;
+    font-size: 2.5em;
     font-weight: 900;
-    letter-spacing: 3px;
-    color: white;
+    text-align: center;
+    letter-spacing: 4px;
+    line-height: 1.25cap;
 }
 
-.jx-footer .jx-payment-methods {
-    padding: 8px 0;
+.payment-methods ul {
+    padding: 6px 8px;
+}
+
+.payment-methods ul li {
+    margin: 0;
+    padding: 0;
+    display: flex;
     justify-content: center;
-    user-select: none;
+    align-items: center;
 }
 
-.jx-footer .jx-payment-methods span {
+.payment-methods ul li span {
+    color: #fff;
     font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
-    font-size: 14px;
+    font-size: 1.075em;
     font-weight: 500;
-    color: white;
+    text-transform: uppercase;
 }
 
-.jx-footer .jx-payment-methods span.coming-soon {
-    font-size: 18px;
+.payment-methods ul li span.coming-soon {
+    font-size: 1.25em;
     font-weight: 700;
     letter-spacing: 4px;
     color: #a5ff2f;
     margin-left: 12px;
 }
 
-.jx-footer img {
+.payment-methods ul li img {
     width: auto;
     height: 45px;
+    margin-left: 12px;
     user-select: none;
 }
 
-.jx-footer .jx-payment-methods img {
-    margin-left: 12px;
+.sub-container {
+    color: #fff;
+    text-transform: uppercase;
 }
 
-.jx-footer .container:nth-child(2) {
-    margin-top: 8px;
-    border-radius: 12px;
-    padding: 8px 0;
+.sub-container .title {
+    color: #ffffff;
+    margin: 0 0 12px 0;
+    font-size: 2.25em;
+    font-weight: 800;
 }
 
-.jx-footer .jx-text {
-    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
-    color: white;
-    font-size: 14px;
-    font-weight: 300;
-    text-transform: capitalize;
-}
-
-.jx-footer .jx-text span {
-    font-family: "Fira Sans", "Arial Narrow", Arial, sans-serif;
-    font-weight: 500;
-    text-transform: lowercase;
+img {
+    width: 40px;
+    height: auto;
 }
 
 .google-map {

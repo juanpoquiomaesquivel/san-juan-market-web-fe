@@ -66,7 +66,7 @@ export class MpFiltersComponent implements OnInit {
   private filterProductFilterList(): ProductFilter[] {
     return this.productFilterList.filter(
       (productFilter) => {
-        const obj = this.selectedCategoryFilterIdList.find(e => e === productFilter.categoryFilterId);
+        const obj = this.selectedCategoryFilterIdList.find(e => e === productFilter.categoryId);
 
         return obj != undefined;
       }
@@ -78,15 +78,15 @@ export class MpFiltersComponent implements OnInit {
 
     this.selectedProductFilterIdList.forEach(
       spf => {
-        const id = this.filteredProductFilterList.find(e => e.id === spf)?.categoryFilterId;
+        const id = this.filteredProductFilterList.find(e => e.id === spf)?.categoryId;
         ignore.add(id);
       }
     );
 
     const noignore = this.filteredProductFilterList.filter(
-      (obj) => !ignore.has(obj.categoryFilterId) || this.selectedProductFilterIdList.includes(obj.id)
+      (obj) => !ignore.has(obj.categoryId) || this.selectedProductFilterIdList.includes(obj.id)
     ).map((obj) => { return obj.id });
 
-    return noignore.length !== 0 ? noignore : this.productFilterList.map((obj) => { return obj.id });
+    return noignore.length > 0 ? noignore : this.productFilterList.map((obj) => { return obj.id });
   }
 }

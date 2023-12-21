@@ -1,16 +1,15 @@
 <div class="container">
-    <div class="search-icon">
-        <i class="bi bi-search"></i>
-    </div>
     <input
-        type="search"
-        placeholder="Busca tu producto."
+        id="productInput"
+        type="text"
+        [placeholder]="inputPlaceholder"
         [(ngModel)]="searchedValue"
         (keyup)="onSearchInputKeyup()"
     />
-    <div *ngIf="searchedValue.length > 0" class="clear-icon">
-        <button (click)="onClearButtonClick()">
-            <i class="bi bi-x"></i>
-        </button>
-    </div>
+    <label for="productInput">
+        <i class="bi bi-search"></i>
+    </label>
+    <button *ngIf="searchedValue.length > 0" (click)="onClearButtonClick()">
+        <i class="bi bi-x-lg"></i>
+    </button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { filter } from 'rxjs';
 
 @Component({
@@ -10,8 +10,9 @@ export class AdminProductSearchComponent {
 
   protected searchedValue: string = '';
 
-  @Output()
-  searchInputChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() inputPlaceholder: string = '';
+
+  @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
 
   protected onClearButtonClick() {
     this.searchedValue = '';

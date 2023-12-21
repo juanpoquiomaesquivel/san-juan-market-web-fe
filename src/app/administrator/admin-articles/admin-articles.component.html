@@ -1,114 +1,155 @@
-<div class="container bg-light p-4 rounded-4">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="title">
-                {{ "administrador de categorías" | uppercase }}
-            </h1>
+<div class="container p-4">
+    <div class="row gap-3">
+        <div class="col-12 text-center mb-2">
+            <span class="title">
+                {{ "administracion de articulos" | uppercase }}
+            </span>
         </div>
 
-        <div class="col-12 my-3">
-            <div class="row">
-                <div class="col-6">
-                    <app-admin-category-search
+        <div class="col-12">
+            <div class="row gap-3 gap-sm-0">
+                <div class="col-12 col-sm-6">
+                    <app-admin-article-search
+                    [inputPlaceholder]="placeholder"
                         (searchInputChange)="onSearchInputChangeEvent($event)"
-                    ></app-admin-category-search>
+                    ></app-admin-article-search>
                 </div>
 
-                <div class="col-6">
-                    <button
-                        type="button"
-                        class="add-btn me-2"
-                        (click)="onAddArticleButtonClick()"
-                    >
-                        <i class="bi bi-plus"></i>
-                        <span>{{ "agregar" | uppercase }}</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="add-btn"
-                        (click)="onUpdateButtonClick()"
-                    >
-                        <i class="bi bi-arrow-clockwise"></i>
-                        <span>{{ "actualizar" | uppercase }}</span>
-                    </button>
+                <div class="col-12 col-sm-6">
+                    <div class="hstack gap-2">
+                        <button
+                            type="button"
+                            class="button"
+                            (click)="onAddArticleButtonClick()"
+                        >
+                            <i class="bi bi-plus-lg"></i>
+                            <span>{{ "agregar" | uppercase }}</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="button"
+                            (click)="onUpdateButtonClick()"
+                        >
+                            <i class="bi bi-arrow-clockwise"></i>
+                            <span>{{ "actualizar" | uppercase }}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-12 scrolly">
-            <table>
+            <table matSort (matSortChange)="onSortChangeEvent($event)">
                 <thead>
                     <tr>
                         <th
-                            *ngFor="let header of listOfHeaders; let i = index"
-                            [ngStyle]="listOfWidths[i]"
+                            *ngFor="let header of headerList"
+                            [ngStyle]="header.styles"
+                            mat-sort-header="{{ header.name }}"
+                            disabled="{{ header.disabled }}"
                         >
-                            {{ header }}
+                            {{ header.label }}
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody [ngSwitch]="webPageDataStatus">
                     <tr
-                        *ngFor="
-                            let article of filteredArticleList
-                                | paginate
-                                    : {
-                                          itemsPerPage: itemsPerPage,
-                                          currentPage: p
-                                      };
-                            let i = index
-                        "
+                        *ngIf="webPageDataStatus !== 'data'; else data"
+                        class="optional"
                     >
-                        <td>
-                            <strong>{{
-                                (p - 1) * itemsPerPage + i + 1
-                            }}</strong>
+                        <td *ngSwitchCase="'fetching'" colspan="9">
+                            <div class="spinner"></div>
                         </td>
-                        <td>{{ article.code }}</td>
-                        <td>{{ article.name }}</td>
-                        <td>{{ article.description }}</td>
-                        <td>{{ article.price }}</td>
-                        <td>{{ article.stock }}</td>
-                        <td>{{ "article.img" }}</td>
-                        <td>{{ article.barCode }}</td>
-                        <td class="text-center">
-                            <div class="hstack gap-2">
-                                <button
-                                    type="button"
-                                    class="add-btn-sm"
-                                    (click)="
-                                        onEditArticleButtonClick(article.id)
-                                    "
-                                >
-                                    <i class="bi bi-pencil-square"></i>
-                                    <span>{{
-                                        editButtonLabel | uppercase
-                                    }}</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    class="add-btn-sm"
-                                    (click)="
-                                        onDeleteArticleButtonClick(article.id)
-                                    "
-                                >
-                                    <i class="bi bi-trash-fill"></i>
-                                    <span>{{
-                                        deleteButtonLabel | uppercase
-                                    }}</span>
-                                </button>
-                            </div>
+                        <td *ngSwitchCase="'loading'" colspan="9">
+                            <div class="spinner"></div>
+                        </td>
+                        <td *ngSwitchCase="'empty'" colspan="9">
+                            No se han encontrado resultados.
+                        </td>
+                        <td *ngSwitchCase="'error'" colspan="9">
+                            Hubo un error con el servidor.
                         </td>
                     </tr>
+                    <ng-template #data>
+                        <tr
+                            *ngFor="
+                                let article of filteredArticleList
+                                    | paginate
+                                        : {
+                                              itemsPerPage: itemsPerPage,
+                                              currentPage: p
+                                          };
+                                let i = index
+                            "
+                        >
+                            <td class="text-center">
+                                <strong>{{
+                                    (p - 1) * itemsPerPage + i + 1
+                                }}</strong>
+                            </td>
+                            <td class="text-center">{{ article.code | uppercase }}</td>
+                            <td>{{ article.name | uppercase }}</td>
+                            <td>{{ article.description }}</td>
+                            <td class="text-center">{{ article.price }}</td>
+                            <td><div
+                                class="w-100 d-flex justify-content-center"
+                            >
+                                <button
+                                    type="button"
+                                    class="button-sm"
+                                    (click)="
+                                        onOpenArticleImageButtonClick(
+                                            article.image
+                                        )
+                                    "
+                                >
+                                    <i class="bi bi-image"></i>
+                                </button>
+                            </div></td>
+                            <td class="text-center">{{ article.barCode }}</td>
+                            <td class="text-center">{{ article.product | uppercase }}</td>
+                            <td>
+                                <div
+                                    class="hstack gap-2 justify-content-center"
+                                >
+                                    <button
+                                        type="button"
+                                        class="button-sm"
+                                        (click)="
+                                            onEditArticleButtonClick(article.id)
+                                        "
+                                        [disabled]="
+                                            isBeingModified === article.id
+                                        "
+                                    >
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="button-sm"
+                                        (click)="
+                                            onDeleteArticleButtonClick(
+                                                article.id
+                                            )
+                                        "
+                                        [disabled]="
+                                            isBeingModified === article.id
+                                        "
+                                    >
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </div>
+                            </td></tr
+                    ></ng-template>
                 </tbody>
             </table>
         </div>
-        <div class="col-12 m-3 text-center">
+
+        <div class="col-12 text-center">
             <pagination-controls
-                class="p-0"
-                (pageChange)="onPageChange($event)"
+                class="m-0 p-0"
+                style="font-size: 0.5em"
+                (pageChange)="onPageChangeEvent($event)"
                 [previousLabel]="previousLabel"
                 [nextLabel]="nextLabel"
             ></pagination-controls>

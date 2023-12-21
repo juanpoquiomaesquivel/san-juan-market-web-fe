@@ -1,129 +1,182 @@
-<button
-    mat-icon-button
-    [mat-dialog-close]="undefined"
-    style="float: right"
-    tabindex="-1"
->
-    <mat-icon>close</mat-icon>
+<button class="close-button" [mat-dialog-close]="undefined">
+    <i class="bi bi-x-lg"></i>
 </button>
 
-<div class="text-center h5 px-2" style="margin-top: 50px; margin-bottom: 2px"  *ngIf="!isLoading">
-    <span style="font-weight: bold">AGREGAR NUEVA CATEGORÍA</span>
-</div>
+<div mat-dialog-content class="container scrolly">
+    <form
+        *ngIf="categoryForm"
+        [formGroup]="categoryForm"
+        (ngSubmit)="OnFormSubmitted()"
+    >
+        <div class="vstack gap-3">
+            <div class="pb-2 text-center">
+                <span class="title">{{
+                    categoryFormTitle | uppercase
+                }}</span>
+            </div>
 
-<div class="spinner my-3" *ngIf="isLoading"></div>
-
-<div mat-dialog-content style="padding: 15px; color: black" *ngIf="!isLoading">
-    <div class="row gap-2 mb-3">
-        <div class="col-12">
-            <div style="font-weight: bold">Adicione etiquetas</div>
             <div class="hstack gap-2">
-                <select
-                    class="form-select form-select-sm"
-                    [(ngModel)]="selectedClassOption"
-                >
-                    <optgroup
-                        *ngFor="
-                            let classOptionSubList of filteredClassOptionList
-                        "
-                        label="{{ classOptionSubList.family | uppercase }}"
+                <div class="form-field w-75">
+                    <select
+                        id="ctags"
+                        class="dg-input"
+                        formControlName="tags"
+                        tabindex="-1"
+                        [ngClass]="{
+                            'has-content': categoryForm.get('tags').value != 0
+                        }"
                     >
-                        <option
+                        <option value="0" hidden></option>
+                        <optgroup
+                            style="font-size: 1em"
                             *ngFor="
-                                let classOption of classOptionSubList.classOptionList
+                                let classOptionSubList of filteredClassOptionList
                             "
-                            value="{{ classOption.id }}"
+                            label="{{ classOptionSubList.family | uppercase }}"
+                            title="{{ classOptionSubList.family | uppercase }}"
                         >
-                            <div
-                                class="text-break"
-                                style="
-                                    max-width: 100px;
-                                    overflow: hidden;
-                                    white-space: nowrap;
-                                    text-overflow: ellipsis;
+                            <option
+                                style="font-size: 1em"
+                                *ngFor="
+                                    let classOption of classOptionSubList.classOptionList
+                                "
+                                value="{{ classOption.id }}"
+                                title="{{ classOption.name }}"
+                                [disabled]="
+                                    selectedClassOptionList.includes(
+                                        classOption.id
+                                    )
                                 "
                             >
-                                {{ classOption.name | uppercase }}
-                            </div>
-                        </option>
-                    </optgroup>
-                </select>
+                                {{
+                                    getUnavailableClassOptionName(
+                                        classOption.id
+                                    ) + classOption.name | uppercase
+                                }}
+                            </option>
+                        </optgroup>
+                    </select>
+                    <label for="ctags" class="label">{{ "etiqueta" }}</label>
+                </div>
                 <button
                     type="button"
-                    class="btn btn-sm btn-primary"
+                    class="dg-button w-25"
                     (click)="onAddClassOptionButtonClick()"
-                    [disabled]="selectedClassOption === undefined"
+                    [disabled]="categoryForm.get('tags').value === 0"
                 >
-                    Agregar
+                    <span>{{ "añadir" | uppercase }}</span>
+                </button>
+            </div>
+
+            <div
+                class="form-field gap-2 scrolly"
+                style="max-height: 100px"
+                *ngIf="selectedClassOptionList.length > 0"
+            >
+                <div class="vstack gap-1">
+                    <div
+                        class="tag-badge"
+                        style="font-size: 0.5em"
+                        *ngFor="let selectedClass of selectedClassOptionList"
+                    >
+                        <span [title]="getClassOptionName(selectedClass)">{{
+                            getClassOptionName(selectedClass)
+                        }}</span>
+                        <button
+                            (click)="
+                                onRemoveClassOptionButtonClick(selectedClass)
+                            "
+                        >
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <input
+                    type="text"
+                    id="cname"
+                    class="dg-input"
+                    formControlName="name"
+                    tabindex="-1"
+                    [ngClass]="{
+                        'has-content':
+                            categoryForm.get('name').value?.length > 0
+                    }"
+                />
+                <label for="cname" class="label">{{ "nombre" }}</label>
+                <button
+                    *ngIf="categoryForm.get('name').value?.length > 0"
+                    (click)="categoryForm.patchValue({ name: '' })"
+                >
+                    <i class="bi bi-x-lg"></i>
+                </button>
+                <small
+                    *ngIf="categoryForm.get('name').errors?.['required'] && categoryForm.get('name').touched"
+                >
+                    *Este campo es obligatorio.
+                </small>
+            </div>
+
+            <div class="form-field">
+                <textarea
+                    type="text"
+                    id="cdesc"
+                    class="dg-input"
+                    formControlName="description"
+                    tabindex="-1"
+                    [ngClass]="{
+                        'has-content':
+                            categoryForm.get('description').value?.length > 0
+                    }"
+                ></textarea>
+                <label for="cdesc" class="label">{{ "descripcion" }}</label>
+                <button
+                    *ngIf="categoryForm.get('description').value?.length > 0"
+                    (click)="categoryForm.patchValue({ description: '' })"
+                >
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+
+            <div class="form-field">
+                <input
+                    type="text"
+                    id="cimg"
+                    class="dg-input"
+                    formControlName="image"
+                    tabindex="-1"
+                    [ngClass]="{
+                        'has-content':
+                            categoryForm.get('image').value?.length > 0
+                    }"
+                />
+                <label for="cimg" class="label">{{ "imagen" }}</label>
+                <button
+                    *ngIf="categoryForm.get('image').value?.length > 0"
+                    (click)="categoryForm.patchValue({ image: '' })"
+                >
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div class="hstack pt-2 justify-content-center gap-2">
+                <button
+                    type="submit"
+                    class="dg-button w-50"
+                    [disabled]="categoryForm.invalid"
+                >
+                    <span>{{ categoryFormSaveButtonTitle | uppercase }}</span>
+                </button>
+                <button
+                    [mat-dialog-close]="undefined"
+                    type="button"
+                    class="dg-button w-50"
+                >
+                    <span>{{ "cancelar" | uppercase }}</span>
                 </button>
             </div>
         </div>
-
-        <div class="col-12">
-            <div
-                class="badge text-bg-primary py-0"
-                *ngFor="let selectedClass of selectedClassOptionList"
-                title="{{ selectedClass.name | uppercase }}"
-                style="margin-right: 4px"
-            >
-                <div
-                    class="text-break"
-                    style="
-                        max-width: 100px;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                    "
-                >
-                    <button
-                        type="button"
-                        class="btn btn-sm p-0 m-0"
-                        style="margin-right: 1px"
-                        (click)="
-                            onRemoveClassOptionButtonClick(selectedClass.id)
-                        "
-                    >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ selectedClass.name | uppercase }}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div>Asociele un nombre</div>
-            <input
-                class="form-control form-control-sm"
-                type="text"
-                [(ngModel)]="categoryName"
-            />
-        </div>
-
-        <div class="col-12">
-            <div>Asociele un descripcion</div>
-            <input
-                class="form-control form-control-sm"
-                type="text"
-                [(ngModel)]="categoryDescription"
-            />
-        </div>
-    </div>
-
-    <div class="modal-footer justify-content-center gap-2">
-        <button
-            [mat-dialog-close]="result()"
-            type="button"
-            class="btn btn-sm btn-outline-dark"
-            [disabled]="categoryName.trim().length === 0"
-        >
-            Guardar
-        </button>
-        <button
-            [mat-dialog-close]="undefined"
-            type="button"
-            class="btn btn-sm btn-outline-dark"
-        >
-            Cancelar
-        </button>
-    </div>
+    </form>
 </div>

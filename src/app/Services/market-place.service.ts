@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { CategoryFilter } from "../Models/Market Place/category-filter.model";
@@ -10,35 +10,18 @@ export class MarketPlaceService {
 
     constructor(private httpClient: HttpClient) { }
 
-    options: {
-        headers?: HttpHeaders | { [header: string]: string | string[] };
-        observe?: 'body' | 'events' | 'response';
-        params?:
-        | HttpParams
-        | {
-            [param: string]:
-            | string
-            | number
-            | boolean
-            | ReadonlyArray<string | number | boolean>;
-        };
-        reportProgress?: boolean;
-        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
-        withCredentials?: boolean;
-    };
-
     private baseURL = 'http://localhost:8081';
 
     onLoadCategoryFilterList(): Observable<CategoryFilter[]> {
-        return this.httpClient.get<CategoryFilter[]>(`${this.baseURL}/category/api/filters/get/all`);
+        return this.httpClient.get<CategoryFilter[]>(`${this.baseURL}/category/api/get/filter/all`);
     }
 
     onLoadProductFilterList(): Observable<ProductFilter[]> {
-        return this.httpClient.get<ProductFilter[]>(`${this.baseURL}/product/api/filters/get/all`);
+        return this.httpClient.get<ProductFilter[]>(`${this.baseURL}/product/api/get/filter/all`);
     }
 
     onLoadArticleCardList(): Observable<ArticleCard[]> {
-        return this.httpClient.get<ArticleCard[]>(`${this.baseURL}/article/api/card/get/all`);
+        return this.httpClient.get<ArticleCard[]>(`${this.baseURL}/article/api/get/card/all`);
     }
 
     onSearchFilterButtonClicked: EventEmitter<string> = new EventEmitter<string>();

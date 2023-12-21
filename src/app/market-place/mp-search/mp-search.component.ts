@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MarketPlaceService } from 'src/app/Services/market-place.service';
 
 @Component({

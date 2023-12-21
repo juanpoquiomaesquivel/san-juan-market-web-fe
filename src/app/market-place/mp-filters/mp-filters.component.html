@@ -5,7 +5,7 @@
         </div>
         <div class="row m-0 scrolly">
             <div
-                class="col-sm-12 col-md-12 col-lg-12 col-xl-6 text-center"
+                class="col-6 col-md-12 col-lg-6 text-center"
                 *ngFor="let categoryFilter of categoryFilterList"
             >
                 <div class="jx-toggle d-flex justify-content-center">
@@ -22,7 +22,7 @@
                     >
                         <img
                             class="align-self-center"
-                            src="assets/market-place/default.png"
+                            src="{{ categoryFilter.image }}"
                             alt=""
                         />
                     </label>
@@ -56,7 +56,7 @@
                     >
                         <div
                             class="jx-toggle d-flex justify-content-center mb-1"
-                            *ngIf="productFilter.categoryFilterId === cat.id"
+                            *ngIf="productFilter.categoryId === cat.id"
                         >
                             <input
                                 type="checkbox"

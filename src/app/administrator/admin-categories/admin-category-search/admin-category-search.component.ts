@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { filter } from 'rxjs';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-admin-category-search',
@@ -8,10 +7,11 @@ import { filter } from 'rxjs';
 })
 export class AdminCategorySearchComponent {
 
-  protected searchedValue: string = '';
+  @Input() inputPlaceholder: string = '';
 
-  @Output()
-  searchInputChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() searchInputChange: EventEmitter<string> = new EventEmitter<string>();
+
+  protected searchedValue: string = '';
 
   protected onClearButtonClick() {
     this.searchedValue = '';

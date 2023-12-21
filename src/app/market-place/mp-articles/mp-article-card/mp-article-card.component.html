@@ -1,7 +1,7 @@
-<div class="card" style="width: auto">
+<div class="card">
     <img
         class="card-img-top"
-        src="{{ article.img }}"
+        src="{{ article.image }}"
         title="{{ article.name }}"
     />
 
@@ -11,30 +11,34 @@
         </div>
 
         <div class="d-flex justify-content-between mb-2">
-            <span class="text-success" style="font-size: 18px; font-weight: 600"
+            <span
+                class="text-success"
+                style="font-size: 0.9em; font-weight: 500"
                 >S/. {{ article.price }}</span
             >
-            <span class="text-danger" style="font-size: 14px"
-                ><s>S/. {{ article.price }}</s></span
+            <span
+                class="text-danger"
+                style="font-size: 0.65em; font-weight: 600"
+                ><s>S/. {{ (article.price * 0.97).toFixed(2) }}</s></span
             >
         </div>
 
-        <div class="d-flex justify-content-between mb-2">
+        <div class="mb-2" hidden>
             <span
                 class="text-muted"
-                style="font-size: 14px; font-weight: 400; user-select: none"
+                style="font-size: 0.6em; font-weight: 400; user-select: none"
             >
-                Disponible: <strong>{{ article.stock + " u" }}</strong>
+                Disponible: <strong>{{ "none u" }}</strong>
             </span>
         </div>
 
-        <div class="d-flex flex-column">
-            <button type="button" class="btn" *ngIf="article.stock > 0">
+        <div class="vstack gap-2">
+            <button type="button" class="btn" *ngIf="5 > 0">
                 <span>
                     {{ "¡agregar al carrito!" | uppercase }}
                 </span>
             </button>
-            <button type="button" class="btn mt-2">
+            <button type="button" class="btn">
                 <span>{{ "¡ver más info!" | uppercase }} </span>
             </button>
         </div>

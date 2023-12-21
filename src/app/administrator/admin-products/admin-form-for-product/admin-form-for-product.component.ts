@@ -1,9 +1,11 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoryOption } from 'src/app/Models/Administrator/category-option.model';
 import { ClassOptionGroup } from 'src/app/Models/Administrator/class-option-group.model';
 import { CommodityOption } from 'src/app/Models/Administrator/commodity-option.model';
-import { Product } from 'src/app/Models/product.model';
+import { ProductItem } from 'src/app/Models/Administrator/product-item.model';
+import { Product } from 'src/app/Models/Administrator/product.model';
 import { AdministratorService } from 'src/app/Services/administrator.service';
 
 @Component({
@@ -13,100 +15,176 @@ import { AdministratorService } from 'src/app/Services/administrator.service';
 })
 export class AdminFormForProductComponent {
 
-  protected categoryOptionList: CategoryOption[];
-  protected selectedCategoryOptionId: number = 0;
+  protected productFormTitle = "nuevo producto";
+  protected productFormSaveButtonTitle = "agregar";
 
+  protected categoryOptionList: CategoryOption[] = [];
   private classOptionGroupList: ClassOptionGroup[] = [];
-  private commodityOptionList: CommodityOption[];
+  private commodityOptionList: CommodityOption[] = [];
+  private unavailableCommodityOptionList: CommodityOption[] = [];
   protected filteredCommodityOptionList: { class: string, commodityOptionList: CommodityOption[] }[];
-  protected selectedCommodityOptionList: CommodityOption[] = [];
-  protected deletedCommodityOptionList: CommodityOption[] = [];
-  protected selectedCommodityOption: string;
-  protected productName: string = '';
-  protected productDescription: string = '';
+  protected selectedCommodityOptionList: number[] = [];
+  protected deletedCommodityOptionList: number[] = [];
 
-  private fetching(categoryOptionId: number) {
+  private productName: string = '';
+  private productDescription: string = '';
+  private productImage: string = '';
+
+  protected productForm: FormGroup;
+
+  protected getCommodityOptionName(id: number) {
+    return this.commodityOptionList.find((co) => co.id === id)?.name;
+  }
+
+  protected getUnavailableCommodityOptionName(id: number) {
+    const name = this.unavailableCommodityOptionList.find((obj) => obj.id === id)?.name;
+    return name == undefined ? "" : "[" + name + "] ";
+  }
+
+  constructor(private matDialogRef: MatDialogRef<AdminFormForProductComponent>, @Inject(MAT_DIALOG_DATA) public productData: ProductItem, private administratorService: AdministratorService) { }
+
+  protected isLoading: boolean;
+
+  private fetchData(categoryOptionId: number) {
     this.administratorService.onLoadClassOptionGroupList(categoryOptionId).subscribe(
-      (dataClassOptionGroupList) => {
-        this.classOptionGroupList = dataClassOptionGroupList;
-        const classIdArray = JSON.stringify(this.classOptionGroupList.map((item) => item.id));
+      {
+        next: (classOptionGroupListData) => {
+          this.classOptionGroupList = classOptionGroupListData;
+          const classIdArray = JSON.stringify(this.classOptionGroupList.map((item) => item.id));
 
-        this.administratorService.onLoadAvailableCommodityOptionList(classIdArray).subscribe(
-          (dataCommodityOptionList) => {
-            console.log(dataCommodityOptionList)
-            this.commodityOptionList = dataCommodityOptionList;
-            this.filteredCommodityOptionList = this.filterCommodityOptionList();
-          }
-        );
+
+          this.administratorService.onLoadUnavailableCommodityOptionList(classIdArray).subscribe(
+            {
+              next: (unavailableCommodityOptionListData) => {
+                this.unavailableCommodityOptionList = unavailableCommodityOptionListData;
+              }
+            }
+          );
+
+          this.administratorService.onLoadAvailableCommodityOptionList(classIdArray).subscribe(
+            {
+              next: (commodityOptionListData) => {
+                this.commodityOptionList = commodityOptionListData;
+              },
+              complete: () => this.filterCommodityOptionList()
+            }
+          );
+        }
       }
     );
   }
 
-  protected onCategoryOptionSelectChange(event: Event) {
-    this.selectedCategoryOptionId = parseInt((<HTMLSelectElement>event.target).value);
-    this.fetching(this.selectedCategoryOptionId);
+
+  ngOnInit() {
+    // this load unavailable commodity
+
+    this.administratorService.onLoadCategoryOptionList().subscribe(
+      {
+        next: (categoryOptionListData) => {
+          this.categoryOptionList = categoryOptionListData;
+        }
+      }
+    );
+
+    if (this.productData != undefined) {
+      this.productFormTitle = "editar producto";
+      this.productFormSaveButtonTitle = "guardar";
+      this.productName = this.productData.name;
+      this.productDescription = this.productData.description;
+      this.productImage = this.productData.image;
+
+      this.administratorService.onLoadCategoryIdOfProduct(this.productData.id).subscribe(
+        {
+          next: (categoryId) => {
+            this.fetchData(categoryId);
+
+            this.administratorService.onLoadCurrentCommodityOptionList(this.productData.id).subscribe(
+              {
+                next: (selectedCommodityOptionListData) => {
+                  this.selectedCommodityOptionList = selectedCommodityOptionListData;
+                },
+                complete: () => {
+                  this.productForm = new FormGroup(
+                    {
+                      category: new FormControl(categoryId, [Validators.required]),
+                      tags: new FormControl(0, []),
+                      name: new FormControl(this.productName, [Validators.required]),
+                      description: new FormControl(this.productDescription, []),
+                      image: new FormControl(this.productImage, [])
+                    }
+                  );
+                }
+              }
+            );
+          }
+        }
+      );
+    } else {
+      this.fetchData(1);
+      this.productForm = new FormGroup(
+        {
+          category: new FormControl(1, [Validators.required]),
+          tags: new FormControl(0, []),
+          name: new FormControl(this.productName, [Validators.required]),
+          description: new FormControl(this.productDescription, []),
+          image: new FormControl(this.productImage, [])
+        }
+      );
+    }
+  }
+
+  OnFormSubmitted() {
+    this.matDialogRef.close(
+      [
+        {
+          name: this.productForm.get('name').value,
+          description: this.productForm.get('description').value,
+          image: this.productForm.get('image').value,
+          category: this.productForm.get('category').value,
+        },
+        JSON.stringify(this.selectedCommodityOptionList),
+        JSON.stringify(this.deletedCommodityOptionList)
+      ]
+    );
+  }
+
+  private cont = 0;
+
+  onCategoryOptionSelectChange(e: Event) {
+    const id = parseInt((<HTMLSelectElement>e.target).value);
+
+    this.selectedCommodityOptionList.forEach(e => {
+      this.deletedCommodityOptionList.push(e);
+    });
+    this.selectedCommodityOptionList = [];
+
+    this.fetchData(id);
   }
 
   private filterCommodityOptionList() {
-    return this.classOptionGroupList.map(
+    this.filteredCommodityOptionList = this.classOptionGroupList.map(
       (entry) => (
         {
           class: entry.name,
-          commodityOptionList: this.commodityOptionList.filter(
-            (commodityOption) => commodityOption.classId === entry.id && this.selectedCommodityOptionList.find((option) => option.id === commodityOption.id) === undefined
-          )
+          commodityOptionList: this.commodityOptionList.filter((commodityOption) => commodityOption.classId === entry.id)
         }
       )
     );
   }
 
-  protected result() {
-    return [
-      this.productName,
-      this.productDescription,
-      this.selectedCategoryOptionId,
-      JSON.stringify(this.selectedCommodityOptionList.map((item) => item.id)),
-      JSON.stringify(this.deletedCommodityOptionList.map((item) => item.id))
-    ]
-  }
-
-  constructor(@Inject(MAT_DIALOG_DATA) public productData: Product, private administratorService: AdministratorService) { }
-
-  ngOnInit() {
-    if (this.productData != undefined) {
-      this.productName = this.productData.name;
-      this.productDescription = this.productData.description;
-      this.selectedCategoryOptionId = this.productData.categoryId;
-      this.administratorService.onLoadCurrentCommodityOptionList(this.productData.id).subscribe(
-        (data) => {
-          this.selectedCommodityOptionList = data;
-        }
-      );
-    }
-
-    this.administratorService.onLoadCategoryOptionList().subscribe(
-      (dataCategoryOptionList) => {
-        this.categoryOptionList = dataCategoryOptionList;
-        this.selectedCategoryOptionId = this.selectedCategoryOptionId === 0 ? this.categoryOptionList.at(0).id : this.selectedCategoryOptionId;
-
-        this.fetching(this.selectedCategoryOptionId);
-      }
-    );
-  }
-
   protected onAddCommodityOptionButtonClick() {
-    const value = parseInt(this.selectedCommodityOption);
-    this.selectedCommodityOptionList.push(this.commodityOptionList.find((option) => option.id === value));
-    this.deletedCommodityOptionList = this.deletedCommodityOptionList.filter((item) => item.id != value);
-    this.filteredCommodityOptionList = this.filterCommodityOptionList();
-    this.selectedCommodityOption = undefined;
+    const value = parseInt(this.productForm.get('tags').value);
+    this.selectedCommodityOptionList.push(this.commodityOptionList.find((option) => option.id === value)?.id);
+    this.deletedCommodityOptionList = this.deletedCommodityOptionList.filter((item) => item !== value);
+    this.filterCommodityOptionList();
+    this.productForm.get('tags').setValue(0);
   }
 
   protected onRemoveCommodityOptionButtonClick(value: number) {
-    this.commodityOptionList.push(this.selectedCommodityOptionList.find((op) => op.id === value));
-    this.deletedCommodityOptionList.push(this.selectedCommodityOptionList.find((op) => op.id === value));
-    this.selectedCommodityOptionList = this.selectedCommodityOptionList.filter((entry) => entry.id != value);
-    this.filteredCommodityOptionList = this.filterCommodityOptionList();
-    this.selectedCommodityOption = undefined;
+    this.deletedCommodityOptionList.push(this.selectedCommodityOptionList.find((op) => op === value));
+    this.selectedCommodityOptionList = this.selectedCommodityOptionList.filter((entry) => entry !== value);
+    console.log("removing");
+    console.log(this.selectedCommodityOptionList);
+    this.filterCommodityOptionList();
   }
 }

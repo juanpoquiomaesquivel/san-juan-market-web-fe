@@ -1,0 +1,133 @@
+.container .vstack {
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    font-size: 28px;
+}
+
+.logo {
+    color: #a8144d;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.user-form {
+    width: 100%;
+    display: grid;
+    row-gap: 8px;
+}
+
+.user-form .form-field {
+    position: relative;
+}
+
+.user-form .form-field label {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin: 0;
+    padding: 0;
+    transition: 0.333s ease-in-out;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-form .form-field label i {
+    color: #5e5e5e;
+    font-size: 0.5em;
+    transition: 0.333s ease-in-out;
+}
+
+.user-form .form-field input::-webkit-search-decoration,
+.user-form .form-field input::-webkit-search-cancel-button,
+.user-form .form-field input::-webkit-search-results-button,
+.user-form .form-field input::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+}
+
+.user-form .form-field input {
+    width: 100%;
+    height: 36px;
+    background-color: #ffffff;
+    border: 1px solid #5e5e5e;
+    border-radius: 25px;
+    padding: 0 11px 0 36px;
+    font-size: 0.5em;
+    font-weight: 400;
+    transition: 0.333s ease-in-out;
+}
+
+.user-form .form-field input:hover {
+    border-color: #a8144d;
+}
+
+.user-form .form-field input:hover:not(:focus) + label i {
+    color: #a8144d;
+    animation: tilt-shaking 0.333s 1 ease-in-out;
+}
+
+.user-form .form-field input:focus {
+    color: #ce0059;
+    outline: none;
+    border: 1px solid #ce0059;
+    box-shadow: 0 0 0 1px #ce0059;
+}
+
+.user-form .form-field input:focus + label i {
+    color: #ce0059;
+    transform: scale(1.15, 1.15);
+}
+
+.user-form .form-check {
+    font-size: 0.5em;
+    margin: 0;
+    padding: 0;
+}
+
+.user-form .form-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-form .form-button button {
+    color: #fff;
+    width: 100%;
+    border: none;
+    border-radius: 24px;
+    background-color: #a8144d;
+    padding: 8px 16px;
+    font-size: 0.5em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.333s ease-in-out;
+}
+
+.user-form .form-button button:hover {
+    background-color: #ce0059;
+}
+
+.user-form .form-button button:active {
+    transform: scale(0.98);
+    transition-duration: 0s;
+}
+
+.user-options {
+    width: 100%;
+    font-size: 24px;
+}
+
+.user-options a {
+    color: #a8144d;
+    font-size: 0.5em;
+}
+
+.user-options a:hover {
+    color: #ce0059;
+}

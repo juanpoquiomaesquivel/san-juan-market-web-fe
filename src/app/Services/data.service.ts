@@ -4,7 +4,7 @@ import { ArticleCard } from '../Models/article-card.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Category } from '../Models/Administrator/category.model';
-import { Product } from '../Models/product.model';
+import { Product } from '../Models/Administrator/product.model';
 
 @Injectable({
   providedIn: 'root',
