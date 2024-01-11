@@ -21,5 +21,4 @@ The Back End was built within a microservice architecture for each of the shown 
 Database was implemented in Microsoft SQL Server 19.
 
 ## DEMO
-(https://drive.google.com/file/d/17hMHtChPRFAGlhyPJ0NvkK0a30kxZCLF/view?usp=drive_link)
-Link: https://drive.google.com/file/d/17hMHtChPRFAGlhyPJ0NvkK0a30kxZCLF/view?usp=sharing
+https://youtu.be/kNK5Yh_id4E
